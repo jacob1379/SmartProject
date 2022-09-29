@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace = "com.example.demo.consumer.dao.CconsumerDao">
+
+<insert id="cMemberJoin">
+	insert into C_CONSUMER(C_ID, C_PASSWORD, C_NICKNAME, C_NAME, C_BIRTH, C_PHONE, C_EMAIL, C_BUY_COUNT, C_PROFILE_IMG) 
+	 values (#{cId}, #{cPassword}, #{cNickname}, #{cName}, #{cBirth}, #{cPhone}, #{cEmail}, #{cBuyCount}, #{cProfileImg})
+</insert>
+</mapper>
