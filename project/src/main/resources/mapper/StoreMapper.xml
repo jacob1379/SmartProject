@@ -9,4 +9,28 @@
       insert into S_STORE(S_STORE_NUM,S_STORE_NAME, S_STORE_ADDRESS,S_MIN_DELEVERY,S_STORE_TIME,S_STORE_INTRO) 
       values (#{sStoreNum},#{sStoreName},#{sStoreAddress},#{sMinDeleVery},#{sStoreTime},#{sStoreIntro})
 </insert>
+
+<update id="StoreUpdate">
+	update S_STORE 
+  	  <trim prefix="set" suffixOverrides=",">
+	   	<if test="sStoreName != null">S_STORE_NAME=#{sStoreName},</if>
+	  	<if test="sStoreAddress != null">S_STORE_ADDRESS=#{sStoreAddress},</if>
+	  	<if test="sStoreLogo != null">S_STORE_LOGO=#{sStoreLogo},</if>
+	  	<if test="sMinDeleVery != null">S_MIN_DELEVERY=#{sMinDeleVery},</if>
+	  	<if test="sStoreTime != null">S_STORE_TIME=#{sStoreTime},</if>
+	  	<if test="sStoreIntro != null">S_STORE_INTRO=#{sStoreIntro},</if>
+	  </trim>
+  	where S_STORE_NUM=#{sStoreNum}
+</update>
+
+<delete id="StoreDelete">
+	delete from S_STORE where S_STORE_NUM=#{sStoreNum}
+</delete>
+
+<select id="StoreRead" resultType="com.example.demo.seller.dto.SstoreDto$Read">
+  	<![CDATA[
+  	select * from S_STORE where S_STORE_NUM=#{sStoreNum} and rownum<=1
+  	]]>
+  </select>
+
 </mapper>
