@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.seller.dao.StoreDao">
+
+<insert id="StoreAdd">
+	<selectKey keyProperty="sStoreNum" order="BEFORE" resultType="int">
+      select nvl(max(sStoreNum)+1, 1) from Store
+    </selectKey>
+      insert into Store(sStoreNum,sStoreName,sStoreAddress,sStoreLogo,sStoreTime,sStoreIntro) values(#{bno},#{title},#{content},#{writer})
+</insert>
+</mapper>
