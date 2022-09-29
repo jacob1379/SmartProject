@@ -10,14 +10,14 @@ import lombok.ToString;
 @Getter
 @Builder
 @ToString
-public class Store {
+public class Sstore {
 	
 	private Integer sStoreNum;
 	private String sStoreName;
 	private String sStoreAddress;
 	private String sStoreLogo;
 	private Integer sMinDeleVery;
-	private Date sStoreTime;
+	private Integer sStoreTime;
 	private String sStoreIntro;
 	private Integer sStoreStatus;
 	private String sStoreReview;
