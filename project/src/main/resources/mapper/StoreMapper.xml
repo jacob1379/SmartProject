@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.demo.seller.dao.StoreDao">
+<mapper namespace="com.example.demo.seller.dao.SstoreDao">
 
 <insert id="StoreAdd">
 	<selectKey keyProperty="sStoreNum" order="BEFORE" resultType="int">
       select nvl(max(S_STORE_NUM)+1, 1) from S_STORE
     </selectKey>
       insert into S_STORE(S_STORE_NUM,S_STORE_NAME, S_STORE_ADDRESS,S_MIN_DELEVERY,S_STORE_TIME,S_STORE_INTRO) 
-      values (#{sStoreNum},#{sStoreName},#{sStoreAddress},#{sMinDeleVery},#{sStoreTime},#{sStoreIntro});
+      values (#{sStoreNum},#{sStoreName},#{sStoreAddress},#{sMinDeleVery},#{sStoreTime},#{sStoreIntro})
 </insert>
 </mapper>

@@ -17,11 +17,11 @@ public class SstoreDaoTest {
 	@Autowired
 	SstoreDao sStoreDao;
 	
-	@Transactional
+	//@Transactional
 	@Test
 	public void StoreAddTest() {
 		Sstore store = Sstore.builder().sStoreName("김밥천국").sStoreAddress("학익동3-1")
-				.sMinDeleVery(20000).sStoreIntro("종합분식 김밥천국입니").build();
+				.sMinDeleVery(20000).sStoreTime(1200).sStoreIntro("종합분식 김밥천국입니다").build();
 		assertEquals(1, sStoreDao.StoreAdd(store));
 	}
 	
