@@ -1,6 +1,8 @@
 package com.example.demo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.apache.catalina.Store;
 import org.junit.jupiter.api.Test;
@@ -30,9 +32,15 @@ public class SstoreDaoTest {
 		assertEquals(1,sStoreDao.StoreUpdate(Sstore.builder().sStoreNum(1).sStoreName("부뚜막애순두부").build()));
 	}
 	
-	@Test
+	//@Test
 	public void StoreDeleteTest() {
 		sStoreDao.StoreDelete(3);
+	}
+	
+	@Test
+	public void storeReadTest() {
+		assertNotNull(sStoreDao.StoreRead(1).get());
+		assertNull(sStoreDao.StoreRead(3).get());
 	}
 	
 }
