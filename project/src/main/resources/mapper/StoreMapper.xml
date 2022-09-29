@@ -4,8 +4,9 @@
 
 <insert id="StoreAdd">
 	<selectKey keyProperty="sStoreNum" order="BEFORE" resultType="int">
-      select nvl(max(sStoreNum)+1, 1) from Store
+      select nvl(max(S_STORE_NUM)+1, 1) from S_STORE
     </selectKey>
-      insert into Store(sStoreNum,sStoreName,sStoreAddress,sStoreLogo,sStoreTime,sStoreIntro) values(#{bno},#{title},#{content},#{writer})
+      insert into S_STORE(S_STORE_NUM,S_STORE_NAME, S_STORE_ADDRESS,S_MIN_DELEVERY,S_STORE_TIME,S_STORE_INTRO) 
+      values (#{sStoreNum},#{sStoreName},#{sStoreAddress},#{sMinDeleVery},#{sStoreTime},#{sStoreIntro});
 </insert>
 </mapper>
