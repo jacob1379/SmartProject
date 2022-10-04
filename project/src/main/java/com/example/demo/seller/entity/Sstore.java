@@ -24,4 +24,5 @@ public class Sstore {
 	private Integer sCategoryNum;
 	private Integer sLocationCode;
 	
+	
 }
