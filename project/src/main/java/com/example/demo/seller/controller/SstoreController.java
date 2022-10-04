@@ -10,4 +10,6 @@ public class SstoreController {
 
 	@Autowired
 	private SstoreService service;
+	
+	
 }
