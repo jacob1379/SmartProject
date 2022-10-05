@@ -1,5 +1,8 @@
 package com.example.demo.seller.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,5 +21,14 @@ public class SstoreService {
 		Sstore store = dto.toEntity();
 		storedao.StoreAdd(store);
 		return store;
+	}
+	
+	public Optional<SstoreDto.Read> ReadStore(Integer sStoreNum) {
+		return storedao.StoreRead(sStoreNum);
+	}
+	
+	
+	public List<SstoreDto.ForList> list(Integer pageno, String sStoreName) {
+		return null;
 	}
 }

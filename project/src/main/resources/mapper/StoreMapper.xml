@@ -32,5 +32,11 @@
   	select * from S_STORE where S_STORE_NUM=#{sStoreNum} and rownum<=1
   	]]>
   </select>
+  
+ <select id="StoreList">
+ 	<![CDATA[
+ 	select  from S_STORE 
+ 	]]>
+ </select>
 
 </mapper>

@@ -1,9 +1,12 @@
 package com.example.demo.seller.dao;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.example.demo.dto.BoardDto;
 import com.example.demo.seller.dto.SstoreDto;
 import com.example.demo.seller.entity.Sstore;
 
@@ -18,9 +21,10 @@ public interface SstoreDao {
 	
 	//사업자 번호 중복
 	//public Integer StoreNumberOverlap();
+	// 가게 리스트 출력
+	public List<SstoreDto.ForList> findAll(Map<String,Object> map);
 	//가게 정보 출력
 	public Optional<SstoreDto.Read> StoreRead(Integer sStoreNum);
 	//가게 삭제
 	public Integer StoreDelete(Integer sStoreNum);
-	
 }

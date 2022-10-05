@@ -23,6 +23,14 @@ public class SstoreDto {
 		private Integer sStoreStatus;
 		private String sStoreReview;
 	}
+	@Data
+	public static class ForList {
+		private String sStoreName;
+		private String sStoreLogo;
+		private Integer sMinDeleVery;
+		private Integer sStoreTime;
+		private Integer sStoreSatatus;
+	}
 	
 	@Data
 	@Builder
