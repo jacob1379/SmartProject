@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,7 +18,7 @@ public class SstoreServiceTest {
 	private SstoreService service;
 	
 	@Transactional
-	@Test
+	//@Test
 	public void addStoreTest() {
 		SstoreDto.write dto = SstoreDto.write.builder().sStoreName("제목")
 				.sStoreAddress("주소").sStoreLogo("이미지").sMinDeleVery(1000)
@@ -24,5 +26,22 @@ public class SstoreServiceTest {
 		Sstore store = service.AddStore(dto);
 		System.out.println(store);
 			
+	}
+	
+	//@Test
+	public void updateStoreTest() {
+		SstoreDto.update dtos = SstoreDto.update.builder().sStoreNum(2).sStoreStatus(1).sMinDeleVery(13000).sStoreIntro("하이루").sStoreTime(1000).sStoreAddress("동네어딘가").build();
+		assertEquals(1, service.UpdateStore(dtos));	
+	}
+	
+	@Transactional
+	//@Test
+	public void deleteStoreTest() {
+		service.DeleteStore(3);
+	}
+	
+	@Test
+	public void readStoreTest() {
+		System.out.println(service.ReadStore(1));
 	}
 }

@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.example.demo.dto.BoardDto;
 import com.example.demo.seller.dto.SstoreDto;
 import com.example.demo.seller.entity.Sstore;
 

@@ -23,4 +23,9 @@ public class SstoreController {
 		return ResponseEntity.ok(service.AddStore(dto));
 	}
 	
+	//@PostMapping()
+	//public ResponseEntity<Sstore> update (@ModelAttribute SstoreDto.update dto) {
+	//	return ResponseEntity.ok(service.UpdateStore(dto));
+	//}
+	
 }

@@ -52,4 +52,24 @@ public class SstoreDto {
 					.sLocationCode(sLocationCode).build();
 		}
 	}
+	
+	@Data
+	@Builder
+	public static class update {
+		
+		private Integer sStoreNum;
+		private String sStoreAddress;
+		private String sStoreLogo;
+		private Integer sMinDeleVery;
+		private Integer sStoreTime;
+		private String sStoreIntro;
+		private Integer sStoreStatus;
+		
+		public Sstore toEntity() {
+			return Sstore.builder().sStoreAddress(sStoreAddress)
+					.sStoreLogo(sStoreLogo).sMinDeleVery(sMinDeleVery).sStoreTime(sStoreTime)
+					.sStoreIntro(sStoreIntro).sStoreStatus(sStoreStatus).sStoreNum(sStoreNum).build();
+		}
+		
+	}
 }

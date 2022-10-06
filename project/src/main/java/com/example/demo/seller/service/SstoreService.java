@@ -31,4 +31,12 @@ public class SstoreService {
 	public List<SstoreDto.ForList> list(Integer pageno, String sStoreName) {
 		return null;
 	}
+	
+	public Integer UpdateStore(SstoreDto.update dto) {
+		return storedao.StoreUpdate(dto.toEntity());
+	}
+	
+	public Integer DeleteStore(Integer sStoreNum) {
+		return storedao.StoreDelete(sStoreNum);
+	}
 }
