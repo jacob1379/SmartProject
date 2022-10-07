@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.seller.dao.SmenuDao">
+	
+	<insert id="menuAdd">
+		<selectKey resultType="int" order="BEFORE" keyProperty="sMenuCode">
+			select nvl(max(S_MENU_CODE),0)+1 from S_Menu
+		</selectKey>
+		insert into S_Menu(S_GROUP_NUM, S_MENU_CODE, S_MENU_NAME, S_MENU_INFO, S_MENU_IMG, S_MENU_PRICE)
+		values(#{sGroupNum}, #{sMenuCode}, #{sMenuName}, #{sMenuImg}, #{sMenuInfo}, #{sMenuPrice})
+	</insert>
+	
+	<update id="menuUpdate">
+		update S_MENU
+			<trim prefix="set" suffixOverrides=",">
+				<if test="sMenuName != null">S_MENU_NAME=#{sMenuName},</if>
+				<if test="sMenuInfo != null">S_MENU_INFO=#{sMenuInfo},</if>
+				<if test="sMenuImg != null">S_MENU_IMG=#{sMenuImg},</if>
+				<if test="sMenuPrice != null">S_MENU_PRICE=#{sMenuPrice}</if>
+			</trim>
+		where S_MENU_CODE=#{sMenuCode}
+	</update>
+	
+	<delete id="menuDelete">
+		delete from S_MENU where S_MENU_CODE=#{sMenuCode} 
+	</delete>
+	
+	<select id="menuListRead" resultType="com.example.demo.seller.dto.SmenuDto$ForList">
+		select S_MENU_NAME, S_MENU_IMG, S_MENU_PRICE from S_MENU where S_GROUP_NUM=#{sGroupNum}
+	</select>
+	
+	<select id="menulnforRead" resultType="com.example.demo.seller.dto.SmenuDto$Read">
+		select S_MENU_NAME, S_MENU_INFO, S_MENU_IMG, S_MENU_PRICE from S_MENU where S_MENU_CODE=#{sMenuCode} 
+	</select>
+	
+</mapper>
