@@ -29,7 +29,7 @@ public class SstoreDto {
 		private String sStoreLogo;
 		private Integer sMinDeleVery;
 		private Integer sStoreTime;
-		private Integer sStoreSatatus;
+		private Integer sStoreStatus;
 	}
 	
 	@Data
@@ -44,12 +44,13 @@ public class SstoreDto {
 		private Integer sStoreStatus;
 		private Integer sCategoryNum;
 		private Integer sLocationCode;
+		private Integer sStoreBNum;
 		
 		public Sstore toEntity() {
 			return Sstore.builder().sStoreName(sStoreName).sStoreAddress(sStoreAddress)
 					.sStoreLogo(sStoreLogo).sMinDeleVery(sMinDeleVery).sStoreTime(sStoreTime)
 					.sStoreIntro(sStoreIntro).sStoreStatus(sStoreStatus).sCategoryNum(sCategoryNum)
-					.sLocationCode(sLocationCode).build();
+					.sLocationCode(sLocationCode).sStoreBNum(sStoreBNum).build();
 		}
 	}
 	

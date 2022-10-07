@@ -19,11 +19,11 @@ public class SstoreDaoTest {
 	@Autowired
 	SstoreDao sStoreDao;
 	
-	//@Transactional
+	@Transactional
 	//@Test
 	public void StoreAddTest() {
-		Sstore store = Sstore.builder().sStoreName("김밥천국2").sStoreAddress("학익동3-1")
-				.sMinDeleVery(20000).sStoreTime(1200).sStoreIntro("종합분식 김밥천국입니다").build();
+		Sstore store = Sstore.builder().sStoreName("육심").sStoreAddress("학익동3-1")
+				.sMinDeleVery(20000).sStoreTime(1200).sStoreIntro("육비 짱").sStoreBNum(1332111111).build();
 		assertEquals(1, sStoreDao.StoreAdd(store));
 		System.out.println(store);
 	}
@@ -39,10 +39,17 @@ public class SstoreDaoTest {
 		sStoreDao.StoreDelete(3);
 	}
 	
-	@Test
+	//@Test
 	public void storeReadTest() {
 		assertNotNull(sStoreDao.StoreRead(1).get());
 		//assertNull(sStoreDao.StoreRead(3).get());
 		}
 	
+	
+	@Test
+	public void StoreBNumOverlapTest () {
+		Integer Bnum = sStoreDao.StoreBNumOverlap(312123123);
+		assertEquals(0, Bnum);
+	
+	}
 }

@@ -23,6 +23,7 @@ public class Sstore {
 	private String sStoreReview;
 	private Integer sCategoryNum;
 	private Integer sLocationCode;
+	private Integer sStoreBNum;
 	
 	
 }

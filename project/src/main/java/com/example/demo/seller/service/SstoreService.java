@@ -28,8 +28,8 @@ public class SstoreService {
 	}
 	
 	
-	public List<SstoreDto.ForList> list(Integer pageno, String sStoreName) {
-		return null;
+	public List<SstoreDto.ForList> list() {
+		return storedao.findAll();
 	}
 	
 	public Integer UpdateStore(SstoreDto.update dto) {
@@ -38,5 +38,10 @@ public class SstoreService {
 	
 	public Integer DeleteStore(Integer sStoreNum) {
 		return storedao.StoreDelete(sStoreNum);
+	}
+	
+	public Integer OverlapStoreBNum(Integer sStoreBNum) {
+		Integer Bnum = storedao.StoreBNumOverlap(sStoreBNum);
+		return Bnum;
 	}
 }
