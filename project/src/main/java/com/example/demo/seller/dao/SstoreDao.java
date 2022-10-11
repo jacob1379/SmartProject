@@ -23,8 +23,11 @@ public interface SstoreDao {
 	
 	// 가게 리스트 출력
 	public List<SstoreDto.ForList> findAll();
+	
 	//가게 정보 출력
 	public Optional<SstoreDto.Read> StoreRead(Integer sStoreNum);
+	
 	//가게 삭제
 	public Integer StoreDelete(Integer sStoreNum);
+	
 }
