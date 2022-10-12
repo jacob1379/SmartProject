@@ -2,9 +2,9 @@ package com.example.demo.seller.entity;
 
 import lombok.*;
 
-@Getter
 @Builder
 @ToString
+@Getter
 public class Smenu {
 	private Integer sGroupNum;
 	private Integer sMenuCode;
@@ -12,4 +12,9 @@ public class Smenu {
 	private String sMenuInfo;
 	private String sMenuImg;
 	private Integer sMenuPrice;
+	
+	public Smenu addGroupNum(Integer sGroupNum) {
+		this.sGroupNum = sGroupNum;
+		return this;
+	}
 }

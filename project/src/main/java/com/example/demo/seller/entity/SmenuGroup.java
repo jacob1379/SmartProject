@@ -11,4 +11,9 @@ public class SmenuGroup {
 	private Integer sGroupNum;
 	private String sGroupName;
 	private Integer sStoreNum;
+	
+	public SmenuGroup addStoreNum(Integer sStoreNum) {
+		this.sStoreNum = sStoreNum;
+		return this;
+	};
 }

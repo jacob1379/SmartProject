@@ -20,7 +20,7 @@ public interface SmenuGroupDao {
 	public Integer menuGroupDelete(Integer sGroupNum);
 	
 	// 메뉴 그룹 리스트 출력
-	public List<SmenuGroupDto.ForList> menuGroupList(Integer sStorNum);
+	public List<SmenuGroupDto.ForList> menuGroupList(Integer sStoreNum);
 	
 	// 메뉴 그룹 1개 출력
 	public Optional<SmenuGroupDto.Read> menuGroupRead(Integer sGroupNum);
