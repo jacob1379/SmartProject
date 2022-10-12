@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<title>Insert title here</title>
+</head>
+
+<script>
+	
+	function printTotalPrice(result){
+		let totalPrice = 0;
+	
+		for(let i=0; i<result.length; i++){
+			totalPrice = totalPrice + (result[i].cmenuCount * result[i].smenuPrice);
+		}
+	
+		$('<span>').text("총 가격 : ").appendTo("#ordertotalPrice");
+		$('<span>').text(totalPrice).appendTo("#ordertotalPrice");
+	}	
+	
+	function printList(result){
+	
+		const $list = $('#orderblist');
+	
+		for(const list of result){
+			const $li = $('<li>').appendTo($list);
+			$('<span>').text(" 메뉴 : " + list.smenuName).attr("name", "sMenuName").appendTo($li);
+			$('<span>').text(" 가격 : " + list.smenuPrice).attr("name", "sMenuPrice").appendTo($li);
+			$('<span>').text(" 수량 : " + list.cmenuCount).attr("name", "cMenuCount").attr("id", "cMenuCount").attr("value", list.cmenuCount).appendTo($li);
+		}
+	
+	}
+	function getHiddenInfo(result, user) {
+		if(result.length > 0){
+			$('<input>').attr("type", "hidden").attr("value", result[0].sstoreNum).attr("name", "sStoreNum").attr("id", "sStoreNum").appendTo('#orderdata');
+			$('<input>').attr("type", "hidden").attr("value", user).attr("name", "cId").attr("id", "cId").appendTo('#orderdata');
+		}
+	}
+	
+	$(document).ready(async function(){
+		
+		let username = 'spring';
+		
+		let result = await $.ajax({
+			url : '/consumer/basket/listread',
+			data : {cId : username}
+		})
+		
+		
+		printList(result.result);
+
+		printTotalPrice(result.result);
+		
+		getHiddenInfo(result.result, username);
+
+		
+		$('#orderbutton').click(function(){
+			
+			const param = {
+					cId : $('#cId').val(),
+					aDeleveryAddress : $('#aDeleveryAddress').val(),
+					aDetailAddress : $('#aDetailAddress').val(),
+					sStoreNum : $('#sStoreNum').val()
+			};
+			
+			$.ajax({
+				url : "/consumer/order/add",
+				data : param,
+				method : "POST",				
+				success : function(data){
+					alert(data.message);
+					location.href = "/order/ordersuccess?ordernum=" + data.result.aorderNum;
+
+				}
+			});
+			
+		});
+	})
+</script>
+
+<body>
+	<div id = "order">
+		<div id="orderBasketList">
+			<ul id="orderblist">
+			</ul>
+			
+			<div id="ordertotalPrice">
+			</div>							
+		</div>
+		<div id="orderdata">
+			<span> 주소 </span> <input type="text" name="aDeleveryAddress" id="aDeleveryAddress">
+			<span> 상세주소 </span> <input type="text" name="aDetailAddress" id="aDetailAddress">
+			<button type = "button" id = "orderbutton"> 결재하기 </button>
+		</div>	
+	</div>
+</body>
+</html>

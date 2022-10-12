@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<title>Insert title here</title>
+
+<script>
+	async function getOrderNum(username) {
+		const ordernum = location.search.substring(10);
+		
+		const check = await $.ajax({
+			url : "/consumer/order/numcheck",
+			data : {aOrderNum : ordernum, cId : username}
+		})
+		
+		if(check.result == false || ordernum == null || ordernum <0 || ordernum == "undefinded" || ordernum == ""){
+			alert("잘못된 접근입니다"); 
+			return location.href = "/main/home";
+		}
+			
+		return ordernum; 
+	}
+	
+	function printOrderlist(result){
+		const $list = $("#orderlist");		
+		const ordermenu = result[0].readDetail;
+		
+		$("<p>").attr("id", "status").appendTo($list);
+		$("<span>").text("주문상태 : ").appendTo($("#status"));
+		$("<span>").text(result[0].aorderStatus).appendTo($("#status"));		
+		$("<p>").attr("id", "orderdate").appendTo($list);
+		$("<span>").text("주문일시 : ").appendTo($("#orderdate"));
+		$("<span>").text(result[0].aorderDate).appendTo($("#orderdate"));
+		$("<p>").attr("id", "address").appendTo($list);
+		$("<span>").text("주소 : ").appendTo($("#address"));
+		$("<span>").text(result[0].adeleveryAddress + " " + result[0].adetailAddress).appendTo($("#address"));
+		
+		$("<p>").attr("id", "menu").appendTo($list);
+		$("<p>").text("주문메뉴").appendTo($("#menu"));
+		for(const menu of ordermenu){
+			$("<p>").text(menu.smenuName).appendTo($("#menu"));
+		}
+	}
+
+	$(document).ready(async function(){
+		let username = 'spring';
+			
+		const ordernum = getOrderNum(username);
+		
+		const result = await $.ajax({
+			url : "/consumer/order/list",
+			data : {aOrderNum : ordernum, cId : username, OrderStatus : "접수대기" }
+		})
+		
+		printOrderlist(result.result);
+		
+		console.log(result);
+		
+	})
+	
+</script>
+</head>
+<body>
+	주문 접수 대기중입니다
+	
+	<div id="orderlist">
+		
+	</div>
+	
+	<div> <a href="/"> 주문내역보기 </a></div>
+	<div> <a href="/main/home"> 홈으로 </a></div>
+</body>
+</html>
