@@ -2,6 +2,8 @@ package com.example.demo.seller.dto;
 
 import javax.validation.constraints.*;
 
+import org.springframework.web.multipart.*;
+
 import com.example.demo.seller.entity.*;
 
 import lombok.*;
@@ -34,13 +36,13 @@ public class SmenuDto {
 		@NotEmpty(message = "메뉴명은 필수입력입니다")
 		private String sMenuName;
 		private String sMenuInfo;
-		private String sMenuImg;
 		@NotNull(message = "메뉴 가격은 필수입력입니다")
 		private Integer sMenuPrice;
+		private MultipartFile sMenuImg;
 		
 		public Smenu toEntity() {
-			return Smenu.builder().sMenuName(sMenuName).sMenuInfo(sMenuInfo).sMenuImg(sMenuImg).sMenuPrice(sMenuPrice).build();
-		}		
+			return Smenu.builder().sMenuName(sMenuName).sMenuInfo(sMenuInfo).sMenuPrice(sMenuPrice).build();
+		}
 	}
 	
 	@Data
@@ -49,10 +51,12 @@ public class SmenuDto {
 		private Integer sMenuCode;
 		private String sMenuName;
 		private String sMenuInfo;
-		private String sMenuImg;
 		private Integer sMenuPrice;
+		
+		private MultipartFile sMenuImg;
+		
 		public Smenu toEntity() {
-			return Smenu.builder().sMenuName(sMenuName).sMenuInfo(sMenuInfo).sMenuImg(sMenuImg).sMenuPrice(sMenuPrice).sMenuCode(sMenuCode).build();
+			return Smenu.builder().sMenuName(sMenuName).sMenuInfo(sMenuInfo).sMenuPrice(sMenuPrice).sMenuCode(sMenuCode).build();
 		}
 	}
 }

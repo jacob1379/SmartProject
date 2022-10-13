@@ -20,36 +20,36 @@ public class SmenuController {
 	
 	// 메뉴 상세정보 출력
 //	@PreAuthorize("isAuthenticated()")
-	@GetMapping(value = "menu/", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Read> read(@RequestParam Integer sMenuCode) {
+	@GetMapping(value = "menu/read", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Read> read(Integer sMenuCode) {
 		return ResponseEntity.ok(service.read(sMenuCode));
 	}
 	
 	// 메뉴 추가
 //	@PreAuthorize("isAuthenticated()")
 	@PostMapping(value = "menu/new", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Smenu> write(@ModelAttribute SmenuDto.Write dto, Integer sGroupNum) {
+	public ResponseEntity<Smenu> write(SmenuDto.Write dto, Integer sGroupNum) {
 		return ResponseEntity.ok(service.write(dto, sGroupNum));
 	}
 	
 	// 메뉴 변경
 //	@PreAuthorize("isAuthenticated()")
 	@PutMapping(value = "menu/", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Integer> update(@ModelAttribute SmenuDto.Update dto) {
+	public ResponseEntity<Integer> update(SmenuDto.Update dto) {
 		return ResponseEntity.ok(service.update(dto));
 	}
 	
 	// 메뉴 삭제
 //	@PreAuthorize("isAuthenticated()")
 	@DeleteMapping(value = "menu/", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Integer> delete(@RequestParam Integer sMenuCode) {
+	public ResponseEntity<Integer> delete(Integer sMenuCode) {
 		return ResponseEntity.ok(service.delete(sMenuCode));
 	}
 	
 	// 메뉴 출력
 //	@PreAuthorize("isAuthenticated()")
 	@GetMapping(value = "menu/all", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<ForList>> list(@RequestParam Integer sGroupNum) {
+	public ResponseEntity<List<ForList>> list(Integer sGroupNum) {
 		return ResponseEntity.ok(service.list(sGroupNum));
 	}
 }

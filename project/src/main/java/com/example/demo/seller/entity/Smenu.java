@@ -17,4 +17,8 @@ public class Smenu {
 		this.sGroupNum = sGroupNum;
 		return this;
 	}
+
+	public void addJoinInfo(String profileName) {
+		this.sMenuImg = profileName;
+	}
 }

@@ -19,7 +19,7 @@ public class SmenuServiceTest {
 	
 	//@Test
 	public void save() {
-		SmenuDto.Write dto = SmenuDto.Write.builder().sMenuName("간장치킨").sMenuInfo("짭짤한 맛").sMenuPrice(18000).sMenuImg("이미지없음").build();
+		SmenuDto.Write dto = SmenuDto.Write.builder().sMenuName("간장치킨").sMenuInfo("짭짤한 맛").sMenuPrice(18000).build();
 		Smenu sMenu = service.write(dto,1);
 		assertNotNull(sMenu.getSMenuCode());
 	}
@@ -28,11 +28,9 @@ public class SmenuServiceTest {
 	//@Test
 	public void updateTest() {
 		SmenuDto.Update dto = SmenuDto.Update.builder().sMenuName("양념치킨").sMenuCode(3).build();
-		SmenuDto.Update dto1 = SmenuDto.Update.builder().sMenuImg("이미지").sMenuCode(3).build();
 		SmenuDto.Update dto2 = SmenuDto.Update.builder().sMenuInfo("설명").sMenuCode(3).build();
 		SmenuDto.Update dto3 = SmenuDto.Update.builder().sMenuPrice(19000).sMenuCode(3).build();
 		assertEquals(1, service.update(dto));
-		assertEquals(1, service.update(dto1));
 		assertEquals(1, service.update(dto2));
 		assertEquals(1, service.update(dto3));
 	}
