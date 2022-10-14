@@ -48,7 +48,7 @@ public class SmenuService {
 	
 	// 메뉴 변경
 	public Integer update(SmenuDto.Update dto, String sId) {
-		if(menuDao.findById(dto.getSMenuCode(), null).get().equals(sId)==true) {
+		if(menuDao.findById(dto.getSMenuCode(), null, null).get().equals(sId)==true) {
 			MultipartFile profile = dto.getSMenuImg();
 			String imgName = System.currentTimeMillis() + "_"+ profile.getOriginalFilename();
 			// 프로필 사진이 있으면 저장하고 변경
@@ -73,7 +73,7 @@ public class SmenuService {
 	
 	// 메뉴 삭제
 	public Integer delete(Integer sMenuCode, String sId) {
-		String id = menuDao.findById(sMenuCode, null).orElseThrow(()-> new SmenuNotFoundException());
+		String id = menuDao.findById(sMenuCode, null, null).orElseThrow(()-> new SmenuNotFoundException());
 		if(id.equals(sId)==false)
 			throw new JobFailException("작업 권한이 없습니다.");
 		return menuDao.menuDelete(sMenuCode);

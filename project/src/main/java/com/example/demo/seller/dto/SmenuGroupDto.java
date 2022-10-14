@@ -32,9 +32,10 @@ public class SmenuGroupDto {
 	public static class Write {
 		@NotEmpty(message = "메뉴그룹명은 필수입력입니다.")
 		private String sGroupName;
+		private Integer sGroupNum;
 
 		public SmenuGroup toEntity() {
-			return SmenuGroup.builder().sGroupName(sGroupName).build();
+			return SmenuGroup.builder().sGroupName(sGroupName).sGroupNum(sGroupNum).build();
 		}
 	}
 	

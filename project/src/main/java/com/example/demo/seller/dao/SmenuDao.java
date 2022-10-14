@@ -26,5 +26,5 @@ public interface SmenuDao {
 	public Optional<SmenuDto.Read> menulnforRead(Integer sMenuCode);
 	
 	// 상품 삭제, 변경 전에 판매회원아이디 확인
-	public Optional<String> findById(Integer sMenuCode, Integer sGroupNum);
+	public Optional<String> findById(Integer sMenuCode, Integer sGroupNum, Integer sStoreNum);
 }

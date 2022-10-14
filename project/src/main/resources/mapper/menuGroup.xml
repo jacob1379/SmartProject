@@ -10,7 +10,9 @@
 	</insert>
 	
 	<select id="menuGroupRead" resultType="com.example.demo.seller.dto.SmenuGroupDto$Read">
-		select * from S_MENU_GROUP where S_GROUP_NUM=#{sGroupNum} order by S_GROUP_NUM
+	<![CDATA[
+		select * from S_MENU_GROUP where S_GROUP_NUM=#{sGroupNum} and rownum<=1 order by S_GROUP_NUM
+	]]>
 	</select>
 	
 	<update id="menuGroupUpdate">
