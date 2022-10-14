@@ -24,22 +24,22 @@ public class SmenuServiceTest {
 		assertNotNull(sMenu.getSMenuCode());
 	}
 	
-	@Transactional
-	//@Test
-	public void updateTest() {
-		SmenuDto.Update dto = SmenuDto.Update.builder().sMenuName("양념치킨").sMenuCode(3).build();
-		SmenuDto.Update dto2 = SmenuDto.Update.builder().sMenuInfo("설명").sMenuCode(3).build();
-		SmenuDto.Update dto3 = SmenuDto.Update.builder().sMenuPrice(19000).sMenuCode(3).build();
-		assertEquals(1, service.update(dto));
-		assertEquals(1, service.update(dto2));
-		assertEquals(1, service.update(dto3));
-	}
-	
-	@Transactional
-	//@Test
-	public void deleteTest() {
-		assertEquals(1, service.delete(3));
-	}
+//	@Transactional
+//	//@Test
+//	public void updateTest() {
+//		SmenuDto.Update dto = SmenuDto.Update.builder().sMenuName("양념치킨").sMenuCode(3).build();
+//		SmenuDto.Update dto2 = SmenuDto.Update.builder().sMenuInfo("설명").sMenuCode(3).build();
+//		SmenuDto.Update dto3 = SmenuDto.Update.builder().sMenuPrice(19000).sMenuCode(3).build();
+//		assertEquals(1, service.update(dto));
+//		assertEquals(1, service.update(dto2));
+//		assertEquals(1, service.update(dto3));
+//	}
+//	
+//	@Transactional
+//	//@Test
+//	public void deleteTest() {
+//		assertEquals(1, service.delete(3));
+//	}
 	
 	//@Test
 	public void listTest() {

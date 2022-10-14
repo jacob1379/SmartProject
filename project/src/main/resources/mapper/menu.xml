@@ -33,4 +33,16 @@
 		select S_MENU_NAME, S_MENU_INFO, S_MENU_IMG, S_MENU_PRICE from S_MENU where S_MENU_CODE=#{sMenuCode} 
 	</select>
 	
+	<select id="findById" resultType="String">
+		select C.S_ID from S_MENU M INNER JOIN s_menu_group G 
+		ON m.s_group_num= g.s_group_num INNER JOIN s_store S 
+		ON g.s_store_num=s.s_store_num INNER JOIN S_SELLER C 
+		ON s.s_store_num=c.s_store_num
+		
+		<trim prefix="where" prefixOverrides="and">
+			<if test="sMenuCode != null"> m.s_menu_code=#{sMenuCode} </if>
+			<if test="sGroupNum != null"> and g.s_group_num=#{sGroupNum} </if>
+		</trim>
+		
+	</select>
 </mapper>

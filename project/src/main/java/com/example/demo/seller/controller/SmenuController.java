@@ -34,16 +34,16 @@ public class SmenuController {
 	
 	// 메뉴 변경
 //	@PreAuthorize("isAuthenticated()")
-	@PutMapping(value = "menu/", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Integer> update(SmenuDto.Update dto) {
-		return ResponseEntity.ok(service.update(dto));
+	@PutMapping(value = "menu/update", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Integer> update(SmenuDto.Update dto, String sId) {
+		return ResponseEntity.ok(service.update(dto, sId));
 	}
 	
 	// 메뉴 삭제
 //	@PreAuthorize("isAuthenticated()")
-	@DeleteMapping(value = "menu/", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Integer> delete(Integer sMenuCode) {
-		return ResponseEntity.ok(service.delete(sMenuCode));
+	@DeleteMapping(value = "menu/delete", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Integer> delete(Integer sMenuCode, String sId) {
+		return ResponseEntity.ok(service.delete(sMenuCode, sId));
 	}
 	
 	// 메뉴 출력

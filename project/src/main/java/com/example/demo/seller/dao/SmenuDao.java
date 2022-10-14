@@ -16,7 +16,7 @@ public interface SmenuDao {
 	// 상품 수정
 	public Integer menuUpdate(Smenu sMenu);
 	
-	// 메뉴번호로 상품 삭제
+	// 상품 삭제
 	public Integer menuDelete(Integer sMenuCode);
 	
 	// 상품리스트 출력
@@ -24,4 +24,7 @@ public interface SmenuDao {
 	
 	// 상품 상세내역 출력
 	public Optional<SmenuDto.Read> menulnforRead(Integer sMenuCode);
+	
+	// 상품 삭제, 변경 전에 판매회원아이디 확인
+	public Optional<String> findById(Integer sMenuCode, Integer sGroupNum);
 }
