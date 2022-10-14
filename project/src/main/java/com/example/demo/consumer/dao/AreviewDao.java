@@ -25,7 +25,7 @@ public interface AreviewDao {
 	// 리뷰 작성자 확인
 	public Optional<String> findById(Integer aReviewNum);
 	
-	// 답글 삭제
+	// 답글 삭제 (리뷰 삭제시)
 	public Integer deleteReply(Integer aReviewNum);
 		
 }

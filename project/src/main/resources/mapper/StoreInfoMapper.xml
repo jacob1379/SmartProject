@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.consumer.dao.StoreInfoDao">
+
+<select id="foodCategoryRead" resultType="com.example.demo.consumer.dto.StoreInfoDto$ReadCategoryDto">
+	select * from S_FOOD_CATEGORY
+</select>
+
+<select id="storelist" resultType="com.example.demo.consumer.dto.StoreInfoDto$StoreListDto">
+	select * from S_STORE where S_CATEGORY_NUM = #{sCategoryNum} and S_LOCATION_CODE = #{sLocationCode}
+</select>
+
+	
+</mapper>

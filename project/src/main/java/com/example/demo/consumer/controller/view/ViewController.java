@@ -36,4 +36,11 @@ public class ViewController {
 	public void storeview() {
 		
 	}
+	
+	@GetMapping("/main/login")
+	public void login() {
+		
+	}
+	
+
 }
