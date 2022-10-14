@@ -1,7 +1,5 @@
 package com.example.demo.seller.dao;
 
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -20,9 +18,6 @@ public interface SstoreDao {
 	
 	//사업자 번호 중복
 	public Integer StoreBNumOverlap(Integer sStoreBNum);
-	
-	// 가게 리스트 출력
-	public List<SstoreDto.ForList> findAll();
 	
 	//가게 정보 출력
 	public Optional<SstoreDto.Read> StoreRead(Integer sStoreNum);

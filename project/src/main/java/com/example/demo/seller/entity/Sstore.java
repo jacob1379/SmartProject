@@ -1,16 +1,21 @@
 package com.example.demo.seller.entity;
 
-import java.sql.Date;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.ToString;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 
 
 @Getter
+@Setter
 @Builder
-@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class Sstore {
+	
 	
 	private Integer sStoreNum;
 	private String sStoreName;
@@ -24,6 +29,10 @@ public class Sstore {
 	private Integer sCategoryNum;
 	private Integer sLocationCode;
 	private Integer sStoreBNum;
+	
+	public void addStoreInfo(String storeLogoName) {
+		this.sStoreLogo = storeLogoName;
+	}
 	
 	
 }

@@ -20,7 +20,7 @@ public class SstoreDaoTest {
 	SstoreDao sStoreDao;
 	
 	@Transactional
-	//@Test
+	@Test
 	public void StoreAddTest() {
 		Sstore store = Sstore.builder().sStoreName("육심").sStoreAddress("학익동3-1")
 				.sMinDeleVery(20000).sStoreTime(1200).sStoreIntro("육비 짱").sStoreBNum(1332111111).build();
@@ -46,10 +46,10 @@ public class SstoreDaoTest {
 		}
 	
 	
-	@Test
+	//@Test
 	public void StoreBNumOverlapTest () {
-		Integer Bnum = sStoreDao.StoreBNumOverlap(312123123);
-		assertEquals(0, Bnum);
+	//	Integer Bnum = sStoreDao.StoreBNumOverlap(312123123);
+	//	assertEquals(0, Bnum);
 	
 	}
 }
