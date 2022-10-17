@@ -26,4 +26,22 @@ public class StoreInfoController {
 		
 		return ResponseEntity.ok(new ResponseDto("가게 리스트 출력", service.storelist(sCategoryNum, sLocationCode)));
 	}
+	
+	@GetMapping(value = "/storeinfo/readstoreinfo", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResponseDto> storeinforead(Integer sStoreNum, Integer sLocationCode){
+		
+		return ResponseEntity.ok(new ResponseDto("가게 내용", service.storeinfo(sStoreNum, sLocationCode)));
+	}
+	
+	@GetMapping(value = "/storeinfo/readstoremenu", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResponseDto> storemenuread(Integer sGroupNum, Integer sLocationCode){
+		
+		return ResponseEntity.ok(new ResponseDto("메뉴 리스트", service.menulist(sGroupNum, sLocationCode)));
+	}
+	
+	@GetMapping(value = "/storeinfo/menudetail", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResponseDto> storemenuread(Integer sGroupNum, Integer sMenuCode,Integer sLocationCode){
+		
+		return ResponseEntity.ok(new ResponseDto("메뉴 정보", service.menudetail(sGroupNum, sMenuCode, sLocationCode)));
+	}
 }

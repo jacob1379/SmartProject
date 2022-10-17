@@ -11,5 +11,16 @@
 	select * from S_STORE where S_CATEGORY_NUM = #{sCategoryNum} and S_LOCATION_CODE = #{sLocationCode}
 </select>
 
+<select id="storeinfo" resultType="com.example.demo.consumer.dto.StoreInfoDto$StoreInfoDetailDto">
+	select distinct smg.S_GROUP_NAME, smg.S_GROUP_NUM from S_STORE ss left outer join S_MENU_GROUP smg on ss.S_STORE_NUM = smg.S_STORE_NUM where smg.S_STORE_NUM = #{sStoreNum} and ss.S_LOCATION_CODE = #{sLocationCode}
+</select>
+
+<select id="menulist" resultType="com.example.demo.consumer.dto.StoreInfoDto$StoreInfoMenuListDto">
+	select sm.* from S_STORE ss left outer join S_MENU_GROUP smg on ss.S_STORE_NUM = smg.S_STORE_NUM left outer join S_MENU sm on smg.S_GROUP_NUM = sm.S_GROUP_NUM where sm.S_GROUP_NUM = #{sGroupNum} and ss.S_LOCATION_CODE = #{sLocationCode}
+</select>
+
+<select id="menudetail" resultType="com.example.demo.consumer.dto.StoreInfoDto$menuDetailDto">
+	select ss.S_STORE_NUM, smg.S_GROUP_NUM ,sm.* from S_STORE ss left outer join S_MENU_GROUP smg on ss.S_STORE_NUM = smg.S_STORE_NUM left outer join S_MENU sm on smg.S_GROUP_NUM = sm.S_GROUP_NUM where sm.S_GROUP_NUM = #{sGroupNum} and sm.S_MENU_CODE = #{sMenuCode} and ss.S_LOCATION_CODE = #{sLocationCode}
+</select>
 	
 </mapper>

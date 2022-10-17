@@ -20,10 +20,17 @@
 		});
 		
 		const list = data.result
+		
 		console.log(list)
+		
+		if(list.length == 0){
+			
+			$("<h1>").text("준비중 입니다.").appendTo('#storelist');
+			
+		}
 		for(const store of list){
 			
-			const a = $("<a>").attr("href","/main/home").appendTo('#storelist');
+			const a = $("<a>").attr("href","/main/storeview?store="+ store.sstoreNum).appendTo('#storelist');
 			const storename = $("<div>").text(store.sstoreName).appendTo(a);
 			$("<span>").text("최소주문금액"+store.sminDelevery).appendTo(storename)
 		}

@@ -5,20 +5,222 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <title>Insert title here</title>
+
+<style>
+	.modal{ 
+ 		position:absolute; 
+		width:100%; height:100%;
+		background: rgba( 255, 255, 255, 0.5 );  
+ 		top:0; left:0; 
+  		display:none;
+	}
+	
+	.modal_content{
+		border: 1px solid black;
+  		width:400px; height:400px;
+  		background:#fff; border-radius:10px;
+ 		position:relative; top:50%; left:50%;
+		margin-top:-100px; margin-left:-200px;
+ 		text-align:center;
+  		box-sizing:border-box; padding:74px 0;
+  		line-height:23px; cursor:pointer;
+	}
+
+</style>
+
+<script>
+	function getStoreNum(){
+		return location.search.substring(7)
+	}
+	
+	async function printmenugroup(storenum, LocationCode){
+		
+		const menugrouplist = await $.ajax({
+			url : "/storeinfo/readstoreinfo",
+			data : {sStoreNum : storenum, sLocationCode : LocationCode},
+			success : function(data){
+				const mglresult = data.result
+				
+				const mglist = $('#menugrouplist')
+				
+				
+				for(const mgl of mglresult){
+					const $li = $("<li>").text(mgl.sgroupName).attr("value",mgl.sgroupNum).attr("class", "menugroup").attr("value2","show").appendTo(mglist);
+					$('<ul>').attr("class", "menulist").appendTo($li)
+				}		
+			}
+		})
+		
+		
+	}
+	
+
+	$(document).ready(async function(){
+		const storenum =getStoreNum()
+		
+		const LocationCode = 4290;
+		
+		const username = "spring";
+		
+		await printmenugroup(storenum, LocationCode)
+		
+		
+		
+		$(document).on("click",".menugroup", async function(e){			
+			//e.stopPropagation()
+			if($(this).attr("value2")=="show") {
+				
+				const groupnum = $(this).attr("value")
+				
+				const result = await $.ajax({
+					url : "/storeinfo/readstoremenu",
+					data : {sGroupNum : groupnum, sLocationCode : LocationCode}
+				})
+				
+				const menulist = result.result
+				
+				const $group = $(this).children();
+				
+				for(const ml of menulist){
+					const $li = $("<li>").attr("value1", ml.sgroupNum).attr("value2",ml.smenuCode).attr("class","listli").appendTo($group)
+					$("<span>").text(ml.smenuImg).appendTo($li);
+					$("<span>").text(ml.smenuName).appendTo($li);
+					$("<span>").text("가격 : " + ml.smenuPrice).appendTo($li);
+				}
+				
+				$(this).attr("value2", "hide");
+				
+			} else {
+				$(this).children().children().remove();
+				
+				$(this).attr("value2", "show");
+			};
+			
+			
+		})
+	
+	function count(value) {
+			let count = parseInt($('#menucount').text());
+							
+			if(value == "plus") {
+				count = count+1;
+				
+				if(count >= 30){
+					alert("수량을 확인해 주세요")
+				}
+				$('#menucount').text(count);
+				$('#priceview').text(count * $('#sMenuPrice').attr("value"));
+			}
+			
+			if(value == "minus") {
+				count = count-1;
+				if(count < 1){
+					count = 1;
+				}
+				$('#menucount').text(count);
+				$('#priceview').text(count * $('#sMenuPrice').attr("value"));
+			}
+				
+	}
+		
+	$(document).on("click", ".listli", async function(e){		
+		e.stopPropagation()
+		const groupnum = $(this).attr("value1");
+		const menucode = $(this).attr("value2");
+		
+		const result = await $.ajax({
+			url : "/storeinfo/menudetail",
+			data : {sGroupNum : groupnum, sMenuCode : menucode ,sLocationCode : LocationCode}
+		})
+		
+		const menudetail = result.result
+				
+		const main = $("<div>").attr("class", "modal").appendTo('#modal');
+		const content = $("<div>").attr("class", "modal_content").appendTo(main);
+		
+		const header = $("<div>").attr("id","modalheader").appendTo(content)
+		$("<span>").text("메뉴 상세").appendTo(header);
+		$("<button>").attr("id", "closeButton").text("x").appendTo(header);
+		
+		$("<input>").attr("value", menudetail.sstoreNum).attr("type", "hidden").attr("id", "sStoreNum").appendTo(content)
+		$("<input>").attr("value", menudetail.sgroupNum).attr("type", "hidden").attr("id", "sGroupNum").appendTo(content)
+		$("<input>").attr("value", menudetail.smenuCode).attr("type", "hidden").attr("id", "sMenuCode").appendTo(content)
+		
+		const menuimg = $("<div>").attr("id", "sMenuImg").appendTo(content);
+		$("<span>").text(menudetail.smenuImg).appendTo(menuimg);
+		
+		const menuinfo = $("<div>").attr("id", "sMenuName").appendTo(content);
+		$("<span>").text("메뉴 정보 : ").appendTo(menuinfo);
+		$("<span>").text(menudetail.smenuInfo).appendTo(menuinfo);
+		
+		const menuname = $("<div>").attr("id", "sMenuName").appendTo(content);
+		$("<span>").text("메뉴 이름 : ").appendTo(menuname);
+		$("<span>").text(menudetail.smenuName).appendTo(menuname);
+		
+		const menuprice = $("<div>").attr("id", "sMenuPrice").attr("value", menudetail.smenuPrice).appendTo(content);
+		$("<span>").text("가격 : ").appendTo(menuname);
+		$("<span>").text(menudetail.smenuPrice).appendTo(menuprice);
+		
+		const count = $("<div>").attr("id", "Count").appendTo(content);
+		$("<span>").text("수량").appendTo(count);
+		$("<button>").attr("id", "countminus").attr("value", "minus").text("-").appendTo(count);
+		$("<span>").text(1).attr("id", "menucount").appendTo(count);
+		$("<button>").attr("id", "countplus").attr("value", "plus").text("+").appendTo(count);
+		
+		const totalpirce = $("<div>").attr("id", "totaprice").appendTo(content);
+		$("<span>").text("총 가격 :").appendTo(totalpirce);
+		$("<span>").text( $('#sMenuPrice').attr("value") * parseInt($('#menucount').text())).attr("id", "priceview").appendTo(totalpirce);
+		
+		const footer = $("<div>").attr("id", "modalfooter").appendTo(content);
+		$("<button>").attr("id", "tobasket").text("장바구니 담기").appendTo(footer);
+		
+		$(".modal").fadeIn();
+	})
+	
+	$(document).on("click", "#closeButton", function(){
+		$(".modal").fadeOut();
+	})
+	
+	$(document).on("click", "#countminus", function(){
+		count($(this).attr("value"));
+	})
+
+	$(document).on("click", "#countplus", function(){
+		count($(this).attr("value"));
+	})	
+	
+	$(document).on("click", "#tobasket", function(){
+		const param = {sMenuCode : $('#sMenuCode').val(), sGroupNum : $('#sGroupNum').val(), sStoreNum : $('#sStoreNum').val(), cMenuCount :$('#menucount').text(), cId : username}
+		
+		$.ajax({
+			url : "/consumer/basket/add",
+			data : param,
+			method : "post"
+		})
+		
+		location.href = location.href;
+	})
+	
+	})
+</script>
+
 </head>
 <body>
-	<div id="page">
-		<header id="header" th:replace="/main/home">
+	
+		<header id="header" th:replace="/fragments/header">
 		</header>
-		<nav id="nav" th:replace="/main/home">
+		<nav id="nav">
 		</nav>
 			<div id="main">
-				<aside id="aside" th:replace="/main/home">
+				<aside id="aside">
 				</aside>
-				<section id="section" th:replace="/basket/cbasket">
+				<section id="section">
+					<ul id="menugrouplist"></ul>
+					<div id="basketlist" th:replace = "/basket/cbasket"></div>
+					<div id = modal></div>
 				</section>
 			</div>
 		<footer id="footer"></footer>
-	</div>
+	
 </body>
 </html>

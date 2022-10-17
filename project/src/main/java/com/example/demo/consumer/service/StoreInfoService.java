@@ -21,4 +21,16 @@ public class StoreInfoService {
 	public List<StoreInfoDto.StoreListDto> storelist(Integer sCategoryNum, Integer sLocationCode) {
 		return storeinfo.storelist(sCategoryNum, sLocationCode);
 	}
+	
+	public List<StoreInfoDto.StoreInfoDetailDto> storeinfo(Integer sStoreNum, Integer sLocationCode) {
+		return storeinfo.storeinfo(sStoreNum, sLocationCode);
+	}
+	
+	public List<StoreInfoDto.StoreInfoMenuListDto> menulist(Integer sGroupNum, Integer sLocationCode) {
+		return storeinfo.menulist(sGroupNum, sLocationCode);
+	}
+	
+	public StoreInfoDto.menuDetailDto menudetail(Integer sGroupNum, Integer sMenuCode,Integer sLocationCode) {
+		return storeinfo.menudetail(sGroupNum, sMenuCode, sLocationCode);
+	};
 }
