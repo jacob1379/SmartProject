@@ -26,6 +26,9 @@ public class BasketService {
 		if (dto.getSStoreNum() != dao.cFindByStore(dao.cBasketListSize(dto.getCId())).get()) {
 			dao.cBasketListDelete(dto.getCId(), null);
 			
+			Cbasket newcb =  dto.toEntity();
+			dao.cBasketAdd(newcb);
+			
 			return "장바구니에 새로운 가게 상품이 담겼습니다";
 		}
 		

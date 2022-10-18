@@ -46,6 +46,8 @@ public class BasketDto {
 		private Integer sGroupNum;
 		private Integer cMenuCount;
 		
+		private String sStoreName;
+		
 		private String sGroupName;
 		private String sMenuName;
 		private Integer sMenuPrice;

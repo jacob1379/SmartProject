@@ -68,9 +68,17 @@
  
 	<select id="cBasketListRead" resultType="com.example.demo.consumer.dto.BasketDto$Read">
 		select cb.C_BASKET_NUM, cb.C_ID, cb.S_MENU_CODE, cb.S_STORE_NUM, cb.S_GROUP_NUM, cb.C_MENU_COUNT,
-		smg.S_GROUP_NAME, sm.S_MENU_NAME, sm.S_MENU_PRICE, sm.S_MENU_IMG
-		from  c_basket cb left outer join s_menu_group smg on cb.S_GROUP_NUM = smg.S_GROUP_NUM 
-		left outer join s_menu sm on cb.S_MENU_CODE = sm.S_MENU_CODE and sm.S_GROUP_NUM = smg.S_GROUP_NUM where cb.C_ID = #{cId}  order by cb.C_BASKET_NUM 
+		smg.S_GROUP_NAME, sm.S_MENU_NAME, sm.S_MENU_PRICE, sm.S_MENU_IMG, ss.S_STORE_NAME
+		
+		from c_basket cb
+		
+		left outer join s_menu sm on cb.S_MENU_CODE = sm.S_MENU_CODE
+		
+		left outer join s_menu_group smg on sm.S_GROUP_NUM = smg.S_GROUP_NUM
+		
+		left outer join s_store ss on smg.S_STORE_NUM = ss.S_STORE_NUM
+		
+		where cb.C_ID = #{cId} order by cb.C_BASKET_NUM 
 	</select>
 	
 	<select id="cBasketListSize" resultType="int">

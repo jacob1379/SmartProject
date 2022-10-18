@@ -7,6 +7,7 @@
 
 <script>
 	function printList(result){
+		$('<span>').text(result[0].sstoreName).attr("name", "sStoreName").appendTo('#BasketStore');
 		
 		const $list = $('#blist');
 		
@@ -23,7 +24,7 @@
 	}
 	
 	function printTotalPrice(result){
-		let totalPrice = 0;
+		let totalPrice =  0;
 		
 		for(let i=0; i<result.length; i++){
 			totalPrice = totalPrice + (result[i].cmenuCount * result[i].smenuPrice);
@@ -86,12 +87,7 @@
 					alert(data.message);
 					location.href = location.href;
 					
-					// 현재페이지나 해당정보를 다시불러들이는
-					// 
-				}/*,
-				complete: function(){
-					$('#basket').load(location.href + ' #basket');
-				}*/
+				}
 			})
 			}
 		});
@@ -130,6 +126,7 @@
 
 <body>
 	<div id=basket>
+		<div id="BasketStore"></div>
 		<div id="BasketList">
 			<ul id="blist">
 			</ul>

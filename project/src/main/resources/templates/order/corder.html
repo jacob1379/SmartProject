@@ -10,7 +10,7 @@
 	
 	function printTotalPrice(result){
 		let totalPrice = 0;
-	
+		
 		for(let i=0; i<result.length; i++){
 			totalPrice = totalPrice + (result[i].cmenuCount * result[i].smenuPrice);
 		}
@@ -20,7 +20,9 @@
 	}	
 	
 	function printList(result){
-	
+		
+		$('<span>').text(result[0].sstoreName).attr("name", "sStoreName").appendTo('#orderStoreInfo');
+		
 		const $list = $('#orderblist');
 	
 		for(const list of result){
@@ -76,11 +78,21 @@
 			});
 			
 		});
+		
+		$('#orderCansleAndBack').on("click", function() {
+			const a = confirm("주문을 취소하고 이전으로 돌아갑니다");
+			
+			if(a) {
+				window.history.back();
+			}
+		});
+		
 	})
 </script>
 
 <body>
 	<div id = "order">
+		<div id="orderStoreInfo"></div>
 		<div id="orderBasketList">
 			<ul id="orderblist">
 			</ul>
@@ -92,7 +104,8 @@
 			<span> 주소 </span> <input type="text" name="aDeleveryAddress" id="aDeleveryAddress">
 			<span> 상세주소 </span> <input type="text" name="aDetailAddress" id="aDetailAddress">
 			<button type = "button" id = "orderbutton"> 결재하기 </button>
-		</div>	
+		</div>
+		<button id="orderCansleAndBack"> 뒤로가기 </button>	
 	</div>
 </body>
 </html>

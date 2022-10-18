@@ -150,7 +150,6 @@
 		$("<span>").text(menudetail.smenuImg).appendTo(menuimg);
 		
 		const menuinfo = $("<div>").attr("id", "sMenuName").appendTo(content);
-		$("<span>").text("메뉴 정보 : ").appendTo(menuinfo);
 		$("<span>").text(menudetail.smenuInfo).appendTo(menuinfo);
 		
 		const menuname = $("<div>").attr("id", "sMenuName").appendTo(content);
@@ -158,7 +157,7 @@
 		$("<span>").text(menudetail.smenuName).appendTo(menuname);
 		
 		const menuprice = $("<div>").attr("id", "sMenuPrice").attr("value", menudetail.smenuPrice).appendTo(content);
-		$("<span>").text("가격 : ").appendTo(menuname);
+		$("<span>").text("가격 : ").appendTo(menuprice);
 		$("<span>").text(menudetail.smenuPrice).appendTo(menuprice);
 		
 		const count = $("<div>").attr("id", "Count").appendTo(content);
@@ -195,10 +194,14 @@
 		$.ajax({
 			url : "/consumer/basket/add",
 			data : param,
-			method : "post"
+			method : "post",
+			success : function(data){
+				alert(data.message);
+				location.href = location.href;
+			}
 		})
 		
-		location.href = location.href;
+		
 	})
 	
 	})
