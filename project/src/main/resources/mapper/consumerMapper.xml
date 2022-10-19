@@ -23,13 +23,9 @@
 <select id="cFindId" resultType="com.example.demo.consumer.dto.ConsumerDto$OutputFindId">
 	select * from CONSUMER where C_EMAIL=#{cEmail}
 </select>
-  
-<!-- <select id="cFindId" resultType="com.example.demo.consumer.entity.Consumer">
-	select * from CONSUMER where C_EMAIL=#{cEmail}
-</select> -->
 
 <select id="cFindPassword" resultType="com.example.demo.consumer.entity.Consumer">
-	select * from CONSUMER where C_ID=#{cId} and C_EMAIL=#{cEmail}
+	select * from CONSUMER where C_ID=#{cId}
 </select>
 
 <select id="cMemberRead" resultType="com.example.demo.consumer.dto.ConsumerDto$Read">

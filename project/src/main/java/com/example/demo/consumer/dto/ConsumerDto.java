@@ -79,7 +79,7 @@ public class ConsumerDto {
 	}
 	
 	@Data
-	public static class ResetPassword {
+	public static class FindPassword {
 		@Pattern(regexp="^[A-Z0-9]{8,10}$", message="아이디는 대문자와 숫자 8~12자입니다")
 		@NotEmpty(message="아이디는 필수입력입니다")
 		private String cId;

@@ -33,24 +33,24 @@ public class ConsumerDaoTest {
 	
 	//@Test
 	public void cEmailCheck() {
-		assertEquals(true, dao.cEmailCheck("hompajo27@naver.com"));
+		assertEquals(true, dao.cEmailCheck("jlt@naver.com"));
 		assertEquals(false, dao.cEmailCheck("mk@naver.com"));
 	}
 	
 	@Test
 	public void cMemberJoinTest() {
-		Consumer consumer = Consumer.builder().cId("SPRING123").cPassword("1234").cName("저라뎃").cNickname("JustLikeThat").cBirthday(LocalDate.of(2022, 10, 6)).cPhone("01013791004").cEmail("hompajo27@naver.com").cProfile("aa.jpg").cLevel(Levels.GOLD).build();
+		Consumer consumer = Consumer.builder().cId("SPRING123").cPassword("1234").cName("저라뎃").cNickname("JustLikeThat").cBirthday(LocalDate.of(2022, 10, 6)).cPhone("01013791004").cEmail("jlt@naver.com").cProfile("aa.jpg").cLevel(Levels.GOLD).build();
 		assertEquals(1, dao.cMemberJoin(consumer));
 	}
 	
 	//@Test
 	public void cFindId() {
-		assertNotNull(dao.cFindId("hompajo27@naver.com").get());
+		assertNotNull(dao.cFindId("jlt@naver.com").get());
 	}
 	
 	//@Test
 	public void cFindPassword() {
-		assertNotNull(dao.cFindPassword("SPRING123", "hompajo27@naver.com").get());
+		assertNotNull(dao.cFindPassword("SPRING123").get());
 	}
 	
 	//@Test

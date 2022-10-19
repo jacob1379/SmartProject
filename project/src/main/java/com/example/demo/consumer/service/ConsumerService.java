@@ -16,7 +16,7 @@ import com.example.demo.consumer.dao.ConsumerDao;
 import com.example.demo.consumer.dto.ConsumerDto;
 import com.example.demo.consumer.entity.Consumer;
 import com.example.demo.consumer.entity.Levels;
-import com.example.demo.consumer.exception.CounsumerNotFoundException;
+import com.example.demo.consumer.exception.ConsumerNotFoundException;
 import com.example.demo.consumer.exception.JobFailException;
 import com.example.demo.consumer.util.MailUtil;
 
@@ -88,7 +88,20 @@ public class ConsumerService {
 	
 	public void cFindId(ConsumerDto.InputFindId dto) {
 		// Consumer consumer = 
-		ConsumerDto.OutputFindId consumer = dao.cFindId(dto.getCEmail()).orElseThrow(()->new CounsumerNotFoundException());
+		ConsumerDto.OutputFindId consumer = dao.cFindId(dto.getCEmail()).orElseThrow(()->new ConsumerNotFoundException());
 		mailUtil.sendFindIdMail("hompajo27@gmail.com", dto.getCEmail(), consumer.getCId());
+	}
+	
+	// 비밀번호 찾기
+	// 아이디로 검색 -> 없으면 ConsumerNotFoundException
+	// 이메일 확인 -> 틀리면 ConsumerNotFoundException
+	// 20글자 임시 비밀번호 생성 -> 암호화 -> 비번 변경 -> 메일 발송
+	public void cFindPassword(ConsumerDto.FindPassword dto) {
+		Consumer consumer = dao.cFindPassword(dto.getCId()).orElseThrow(()->new ConsumerNotFoundException());
+		if(consumer.getCEmail().equals(dto.getCEmail())==false)
+			throw new ConsumerNotFoundException();
+		String newPassword = RandomStringUtils.randomAlphanumeric(20);
+		dao.cMemberUpdate(Consumer.builder().cId(dto.getCId()).cPassword(passwordEncoder.encode(newPassword)).build());
+		mailUtil.sendFindPasswordMail("hompajo27@gmail.com", dto.getCEmail(), newPassword);
 	}
 }

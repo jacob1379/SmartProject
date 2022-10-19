@@ -50,4 +50,12 @@ public class MailUtil {
 		mail.setText(buf.toString());
 		sendMail(mail);
 	}
+	
+	// 임시 비밀번호 보내는 메소드
+	public void sendFindPasswordMail(String from, String to, String password) {
+		Mail mail = Mail.builder().from(from).to(to).subject("임시비밀번호").build();
+		String message = new StringBuffer("<p>임시 비밀번호를 발급했습니다</p>")
+				.append("<p>임시비밀번호 :").append(password).append("</p>").toString();
+		sendMail(mail.setText(message));
+	}
 }

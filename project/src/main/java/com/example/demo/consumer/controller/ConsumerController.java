@@ -61,4 +61,10 @@ public class ConsumerController {
 		return ResponseEntity.ok(new ConsumerResponseDto("OK", "아이디를 이메일로 보냈습니다", null));
 	}
 	
+	@GetMapping(path="/consumer/find/password", produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ConsumerResponseDto> findPassword(@Valid ConsumerDto.FindPassword dto, BindingResult bindingResult) {
+		service.cFindPassword(dto);
+		return ResponseEntity.ok(new ConsumerResponseDto("OK", "비밀번호를 이메일로 보냈습니다", null));
+	}
+	
 }
