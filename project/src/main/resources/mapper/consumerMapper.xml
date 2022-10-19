@@ -1,9 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace = "com.example.demo.consumer.dao.CconsumerDao">
+
+<mapper namespace = "com.example.demo.consumer.dao.ConsumerDao">
+
+<select id="cIdCheck" resultType="Boolean">
+	select count(*) from CONSUMER where C_ID=#{cId} and rownum&lt;=1
+</select>
+
+<select id="cNicknameCheck" resultType="Boolean">
+	select count(*) from CONSUMER where C_Nickname=#{cNickname} and rownum&lt;=1
+</select>
+
+<select id="cEmailCheck" resultType="Boolean">
+	select count(*) from CONSUMER where C_EMAIL=#{cEmail} and rownum&lt;=1
+</select>
 
 <insert id="cMemberJoin">
-	insert into C_CONSUMER(C_ID, C_PASSWORD, C_NICKNAME, C_NAME, C_BIRTH, C_PHONE, C_EMAIL, C_BUY_COUNT, C_PROFILE_IMG) 
-	 values (#{cId}, #{cPassword}, #{cNickname}, #{cName}, #{cBirth}, #{cPhone}, #{cEmail}, #{cBuyCount}, #{cProfileImg})
+	insert into CONSUMER(C_ID, C_PASSWORD, C_NICKNAME, C_NAME, C_BIRTHDAY, C_PHONE, C_EMAIL, C_PROFILE, C_LEVEL) 
+	values (#{cId}, #{cPassword}, #{cNickname}, #{cName}, #{cBirthday}, #{cPhone}, #{cEmail}, #{cProfile}, #{cLevel})
 </insert>
+ 
+<select id="cFindId" resultType="com.example.demo.consumer.dto.ConsumerDto$OutputFindId">
+	select * from CONSUMER where C_EMAIL=#{cEmail}
+</select>
+  
+<!-- <select id="cFindId" resultType="com.example.demo.consumer.entity.Consumer">
+	select * from CONSUMER where C_EMAIL=#{cEmail}
+</select> -->
+
+<select id="cFindPassword" resultType="com.example.demo.consumer.entity.Consumer">
+	select * from CONSUMER where C_ID=#{cId} and C_EMAIL=#{cEmail}
+</select>
+
+<select id="cMemberRead" resultType="com.example.demo.consumer.dto.ConsumerDto$Read">
+	select C_ID, C_NICKNAME, C_NAME, C_BIRTHDAY, C_JOINDAY, C_PHONE, C_EMAIL, C_PROFILE, C_BUY_COUNT, C_BUY_MONEY from CONSUMER where C_ID=#{cId}
+</select>
+
+<update id="cMemberUpdate">
+	update CONSUMER
+	<trim prefix="set" suffixOverrides=",">
+		<if test="cPassword!=null">C_PASSWORD=#{cPassword},</if>
+		<if test="cNickname!=null">C_NICKNAME=#{cNickname},</if>
+		<if test="cPhone!=null">C_PHONE=#{cPhone},</if>
+		<if test="cEmail!=null">C_EMAIL=#{cEmail},</if>
+		<if test="cBuyCount!=null">C_BUY_COUNT=#{cBuyCount},</if>
+		<if test="cBuyMoney!=null">C_BUY_MONEY=#{cBuyMoney},</if>
+		<if test="cLoginFailCount!=null">C_LOGIN_FAIL_COUNT=#{cLoginFailCount},</if>
+		<if test="cEnabled!=null">C_ENABLED=#{cEnabled},</if>
+		<if test="cLevel!=null">C_LEVEL=#{cLevel},</if>
+	</trim>
+	where C_ID=#{cId}
+</update>
+
+<delete id="cDeleteAccount">
+	delete from CONSUMER where C_ID=#{cId}
+</delete>
+
 </mapper>
