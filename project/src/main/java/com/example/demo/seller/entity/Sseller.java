@@ -14,7 +14,7 @@ import lombok.*;
 @Builder
 public class Sseller {
 	private String sId;
-	private Integer sBusinessNum;
+	private String sBusinessNum;
 	private String sPassword;
 	private String sName;
 	private LocalDate sBirth;

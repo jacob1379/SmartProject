@@ -30,7 +30,7 @@ public class SsellerDto {
 		private String sId;
 		
 		@NotNull(message="사업자번호는 필수 입력입니다")
-		private Integer sBusinessNum;
+		private String sBusinessNum;
 		
 		@NotEmpty(message="비밀번호는 필수 입력입니다")
 		private String sPassword;
@@ -65,7 +65,7 @@ public class SsellerDto {
 	@Builder
 	public static class Read {
 		private String sId;
-		private Integer sBusinessNum;
+		private String sBusinessNum;
 		private String sName;
 		private LocalDate sBirth;
 		private String sEmail;
@@ -74,7 +74,7 @@ public class SsellerDto {
 		
 		private sLevel slevel;
 	}
-	/*
+	
 	@Data
 	@Builder
 	public static class Update {
@@ -95,17 +95,17 @@ public class SsellerDto {
 		}
 		
 	}
-	*/
 	
+	/*
 	@Data
 	public static class Update {
 		private String sEmail;
 	}
-	
+	*/
 	@Data
 	public static class sbNumCheck {
 		@NotEmpty(message="사업자번호는 필수 입력입니다.")
-		private Integer sBusinessNum;
+		private String sBusinessNum;
 	}
 	
 	@Data
