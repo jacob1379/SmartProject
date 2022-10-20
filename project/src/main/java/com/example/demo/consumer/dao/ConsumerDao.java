@@ -27,7 +27,7 @@ public interface ConsumerDao {
 	// 비밀번호 찾기
 	public Optional<ConsumerDto.OutputFind> cFindPassword(String cId);
 	
-	// 회원정보 확인(읽기)
+	// 회원정보 보기
 	public Optional<Consumer> cMemberRead(String cId);
 
 	// 회원정보 수정

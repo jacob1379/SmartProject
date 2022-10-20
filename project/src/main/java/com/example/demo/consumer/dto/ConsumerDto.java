@@ -119,6 +119,7 @@ public class ConsumerDto {
 	@Data
 	@Builder
 	public static class Update {
+		private String cId;
 		private String cPassword;
 		private String cNickname;
 		private String cPhone;
