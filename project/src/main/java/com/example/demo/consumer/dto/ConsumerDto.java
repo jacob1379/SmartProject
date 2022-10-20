@@ -112,7 +112,7 @@ public class ConsumerDto {
 	}
 	
 	@Data
-	public static class update {
+	public static class Update {
 		private String cPassword;
 		private String cNickname;
 		private Integer cPhone;
