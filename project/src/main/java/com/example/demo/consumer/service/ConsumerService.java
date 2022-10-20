@@ -86,9 +86,9 @@ public class ConsumerService {
 		mailUtil.sendCheckMail("hompajo27@gmail.com", consumer.getCEmail(), checkcode);
 	}
 	
-	public void cFindId(ConsumerDto.InputFindId dto) {
+	public void cFindId(ConsumerDto.FindId dto) {
 		// Consumer consumer = 
-		ConsumerDto.OutputFindId consumer = dao.cFindId(dto.getCEmail()).orElseThrow(()->new ConsumerNotFoundException());
+		ConsumerDto.OutputFind consumer = dao.cFindId(dto.getCEmail()).orElseThrow(()->new ConsumerNotFoundException());
 		mailUtil.sendFindIdMail("hompajo27@gmail.com", dto.getCEmail(), consumer.getCId());
 	}
 	
@@ -97,7 +97,7 @@ public class ConsumerService {
 	// 이메일 확인 -> 틀리면 ConsumerNotFoundException
 	// 20글자 임시 비밀번호 생성 -> 암호화 -> 비번 변경 -> 메일 발송
 	public void cFindPassword(ConsumerDto.FindPassword dto) {
-		Consumer consumer = dao.cFindPassword(dto.getCId()).orElseThrow(()->new ConsumerNotFoundException());
+		ConsumerDto.OutputFind consumer = dao.cFindPassword(dto.getCId()).orElseThrow(()->new ConsumerNotFoundException());
 		if(consumer.getCEmail().equals(dto.getCEmail())==false)
 			throw new ConsumerNotFoundException();
 		String newPassword = RandomStringUtils.randomAlphanumeric(20);

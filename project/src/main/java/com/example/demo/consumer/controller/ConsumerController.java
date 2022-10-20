@@ -56,7 +56,7 @@ public class ConsumerController {
 	}
 	
 	@GetMapping(path="/consumer/find/id", produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ConsumerResponseDto> findId(@Valid ConsumerDto.InputFindId dto, BindingResult bindingResult){
+	public ResponseEntity<ConsumerResponseDto> findId(@Valid ConsumerDto.FindId dto, BindingResult bindingResult){
 		service.cFindId(dto);
 		return ResponseEntity.ok(new ConsumerResponseDto("OK", "아이디를 이메일로 보냈습니다", null));
 	}

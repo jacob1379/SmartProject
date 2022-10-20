@@ -67,15 +67,10 @@ public class ConsumerDto {
 	}
 	
 	@Data
-	public static class InputFindId {
+	public static class FindId {
 		@Email(message="잘못된 이메일 형식입니다")
 		@NotEmpty(message="이메일은 필수입력입니다")
 		private String cEmail;
-	}
-
-	@Data
-	public static class OutputFindId {
-		private String cId;
 	}
 	
 	@Data
@@ -84,6 +79,13 @@ public class ConsumerDto {
 		@NotEmpty(message="아이디는 필수입력입니다")
 		private String cId;
 		@NotEmpty(message="이메일은 필수입력입니다")
+		private String cEmail;
+	}
+
+	@Data
+	public static class OutputFind {
+		private String cId;
+		private String cPassword;
 		private String cEmail;
 	}
 	

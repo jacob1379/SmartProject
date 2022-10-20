@@ -23,10 +23,10 @@ public interface ConsumerDao {
 	public Integer cMemberJoin(Consumer consumer);
 	
 	// 아이디 찾기
-	public Optional<ConsumerDto.OutputFindId> cFindId(String cEmail);
+	public Optional<ConsumerDto.OutputFind> cFindId(String cEmail);
 	
 	// 비밀번호 찾기
-	public Optional<Consumer> cFindPassword(String cId);
+	public Optional<ConsumerDto.OutputFind> cFindPassword(String cId);
 	
 	// 회원정보 확인
 	public Optional<ConsumerDto.Read> cMemberRead(String cId);
