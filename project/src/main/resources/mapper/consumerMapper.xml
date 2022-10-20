@@ -28,7 +28,7 @@
 	select * from CONSUMER where C_ID=#{cId}
 </select>
 
-<select id="cMemberRead" resultType="com.example.demo.consumer.dto.ConsumerDto$Read">
+<select id="cMemberRead" resultType="com.example.demo.consumer.entity.Consumer">
 	select C_ID, C_NICKNAME, C_NAME, C_BIRTHDAY, C_JOINDAY, C_PHONE, C_EMAIL, C_PROFILE, C_BUY_COUNT, C_BUY_MONEY from CONSUMER where C_ID=#{cId}
 </select>
 

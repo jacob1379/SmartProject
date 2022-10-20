@@ -2,6 +2,9 @@ package com.example.demo.consumer.entity;
 
 import java.time.LocalDate;
 
+import com.example.demo.consumer.dto.ConsumerDto;
+import com.example.demo.consumer.dto.ConsumerDto.Read;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,8 +14,8 @@ import lombok.ToString;
 @Getter
 @Builder
 @ToString
-@AllArgsConstructor
-@NoArgsConstructor
+@AllArgsConstructor // 모든 필드 값을 파라미터로 받는 생성자를 만듦
+@NoArgsConstructor // 파라미터가 없는 기본 생성자를 생성
 public class Consumer {
 	private String cId;
 	private String cPassword;
@@ -36,4 +39,10 @@ public class Consumer {
 		this.cPassword = encodedPassword;
 		this.cLevel = cLevel;
 	}
+	
+	public ConsumerDto.Read toRead() {
+		return ConsumerDto.Read.builder().cId(cId).cNickname(cNickname).cName(cName).cBirthday(cBirthday).cJoinday(cJoinday).cPhone(cPhone)
+				.cEmail(cEmail).cProfile(cProfile).cBuyCount(cBuyCount).cBuyMoney(cBuyMoney).cLevel(cLevel).build();
+	}
+	
 };

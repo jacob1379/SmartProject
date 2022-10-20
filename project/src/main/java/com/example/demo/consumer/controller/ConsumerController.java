@@ -26,6 +26,12 @@ public class ConsumerController {
 	@Autowired
 	private ConsumerService service;
 	
+	
+	// 1. 데이터 입출력 방식을 지정
+	//		a) 스프링 입력 : 프로퍼티 에디터에 작성
+	//		b) 스프링 출력 : 메시지 컨버터, JSON의 경우 jackson 어노테이션
+	//		c) 마이바티스 입출력 : TypeHandler
+	
 	@InitBinder
 	public void init(WebDataBinder wdb) {
 		wdb.registerCustomEditor(LocalDate.class, new MyDatePropertyEditor());
@@ -67,4 +73,10 @@ public class ConsumerController {
 		return ResponseEntity.ok(new ConsumerResponseDto("OK", "비밀번호를 이메일로 보냈습니다", null));
 	}
 	
+	//@PreAuthorize("isAuthentication()")
+	@GetMapping(path="/consumer", produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ConsumerResponseDto> read(String cId) {
+		ConsumerDto.Read dto = service.read(cId);
+		return ResponseEntity.ok(new ConsumerResponseDto("OK", dto, null));
+	}
 }

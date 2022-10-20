@@ -2,7 +2,6 @@ package com.example.demo.consumer.dao;
 
 import java.util.Optional;
 
-
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.demo.consumer.dto.ConsumerDto;
@@ -28,8 +27,8 @@ public interface ConsumerDao {
 	// 비밀번호 찾기
 	public Optional<ConsumerDto.OutputFind> cFindPassword(String cId);
 	
-	// 회원정보 확인
-	public Optional<ConsumerDto.Read> cMemberRead(String cId);
+	// 회원정보 확인(읽기)
+	public Optional<Consumer> cMemberRead(String cId);
 
 	// 회원정보 수정
 	public Integer cMemberUpdate(Consumer consumer);

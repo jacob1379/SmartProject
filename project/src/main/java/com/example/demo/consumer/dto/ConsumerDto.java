@@ -62,7 +62,8 @@ public class ConsumerDto {
 		private MultipartFile cProfile;
 		
 		public Consumer toEntity() {
-			return Consumer.builder().cId(cId).cPassword(cPassword).cNickname(cNickname).cName(cName).cBirthday(cBirthday).cPhone(cPhone).cEmail(cEmail).build();
+			return Consumer.builder().cId(cId).cPassword(cPassword).cNickname(cNickname).cName(cName)
+					.cBirthday(cBirthday).cPhone(cPhone).cEmail(cEmail).build();
 		}
 	}
 	
@@ -99,26 +100,33 @@ public class ConsumerDto {
 	}
 	
 	@Data
+	@Builder
 	public static class Read {
 		private String cId;
 		private String cNickname;
 		private String cName;
 		private LocalDate cBirthday;
 		private LocalDate cJoinday;
-		private Integer cPhone;
+		private Long cDays;
+		private String cPhone;
 		private String cEmail;
-		private MultipartFile cProfile;
+		private String cProfile;
 		private Integer cBuyCount;
 		private Integer cBuyMoney;
-		private Levels clevel;
+		private Levels cLevel;
 	}
 	
 	@Data
+	@Builder
 	public static class Update {
 		private String cPassword;
 		private String cNickname;
-		private Integer cPhone;
+		private String cPhone;
 		private String cEmail;
 		private MultipartFile cProfile;
-	}
+		
+		public Consumer toEntity2() {
+			return Consumer.builder().cPassword(cPassword).cNickname(cNickname).cPhone(cPhone).cEmail(cEmail).build();
+		}
+	} 
 }

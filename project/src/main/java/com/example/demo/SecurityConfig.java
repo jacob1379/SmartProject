@@ -24,10 +24,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
-//	@Override // user권한의 아이디 임의 생성
-//	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//		auth.inMemoryAuthentication().withUser("ACCOUNT1").password(passwordEncoder.encode("1234"));
-//	}
+	/*
+	 * @Override // user권한의 아이디 임의 생성 protected void
+	 * configure(AuthenticationManagerBuilder auth) throws Exception {
+	 * auth.inMemoryAuthentication().withUser("ACCOUNT111").password(passwordEncoder
+	 * .encode("1234")); }
+	 */
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
