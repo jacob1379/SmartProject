@@ -1,7 +1,6 @@
 package com.example.demo.seller.dto;
 
 
-import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.seller.entity.Sstore;
 
@@ -19,6 +18,7 @@ public class SstoreDto {
 	
 	@Data
 	public static class Read {
+		private Integer sStoreNum;
 		private String sStoreName;
 		private String sStoreAddress;
 		private String sStoreLogo;
@@ -49,13 +49,12 @@ public class SstoreDto {
 		private Integer sStoreStatus;
 		private Integer sCategoryNum;
 		private Integer sLocationCode;
-		private Integer sStoreBNum;
 		
 		public Sstore toEntity() {
 			return Sstore.builder().sStoreName(sStoreName).sStoreAddress(sStoreAddress)
 					.sMinDeleVery(sMinDeleVery).sStoreTime(sStoreTime)
 					.sStoreIntro(sStoreIntro).sStoreStatus(sStoreStatus).sCategoryNum(sCategoryNum)
-					.sLocationCode(sLocationCode).sStoreBNum(sStoreBNum).build();
+					.sLocationCode(sLocationCode).build();
 		}
 	}
 	
@@ -65,7 +64,6 @@ public class SstoreDto {
 		
 		private Integer sStoreNum;
 		private String sStoreAddress;
-		//private String sStoreLogo;
 		private Integer sMinDeleVery;
 		private Integer sStoreTime;
 		private String sStoreIntro;

@@ -27,8 +27,7 @@ public class Sstore {
 	private Integer sStoreStatus;
 	private String sStoreReview;
 	private Integer sCategoryNum;
-	private Integer sLocationCode;
-	private Integer sStoreBNum;
+	private Integer sLocationCode;	
 	
 	public void addStoreInfo(String storeLogoName) {
 		this.sStoreLogo = storeLogoName;

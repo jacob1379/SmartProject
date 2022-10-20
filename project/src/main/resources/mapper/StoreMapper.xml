@@ -6,8 +6,8 @@
 	<selectKey keyProperty="sStoreNum" order="BEFORE" resultType="int">
       select nvl(max(S_STORE_NUM)+1, 1) from S_STORE
     </selectKey>
-      insert into S_STORE(S_STORE_NUM,S_STORE_NAME, S_STORE_ADDRESS,S_STORE_LOGO,S_MIN_DELEVERY,S_STORE_TIME,S_STORE_INTRO,S_STORE_BNUM) 
-      values (#{sStoreNum},#{sStoreName},#{sStoreAddress},#{sStoreLogo},#{sMinDeleVery},#{sStoreTime},#{sStoreIntro},#{sStoreBNum})
+      insert into S_STORE(S_STORE_NUM,S_STORE_NAME, S_STORE_ADDRESS,S_STORE_LOGO,S_MIN_DELEVERY,S_STORE_TIME,S_STORE_INTRO,S_CATEGORY_NUM,S_LOCATION_CODE) 
+      values (#{sStoreNum},#{sStoreName},#{sStoreAddress},#{sStoreLogo},#{sMinDeleVery},#{sStoreTime},#{sStoreIntro},#{sCategoryNum},#{sLocationCode})
 </insert>
 
 <update id="StoreUpdate">
@@ -34,15 +34,6 @@
   	]]>
 
   </select>
-  
- <select id="StoreList">
- 	<![CDATA[
- 	select sStoreName, sStoreLogo, sMinDeleVery, sStoreTime, sStoreStatus from S_STORE
- 	]]>
- </select>
 
 
-<select id="StoreBNumOverlap" parameterType="Integer" resultType="int">
-		SELECT COUNT(*) FROM S_STORE WHERE S_STORE_BNUM= #{sStoreBNum} and rownum&lt;=1
-	</select>
 </mapper>

@@ -16,9 +16,6 @@ public interface SstoreDao {
 	//가게 정보 수정
 	public Integer StoreUpdate(Sstore store);
 	
-	//사업자 번호 중복
-	public Integer StoreBNumOverlap(Integer sStoreBNum);
-	
 	//가게 정보 출력
 	public Optional<SstoreDto.Read> StoreRead(Integer sStoreNum);
 	

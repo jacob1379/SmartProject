@@ -23,7 +23,7 @@ public class SstoreDaoTest {
 	@Test
 	public void StoreAddTest() {
 		Sstore store = Sstore.builder().sStoreName("육심").sStoreAddress("학익동3-1")
-				.sMinDeleVery(20000).sStoreTime(1200).sStoreIntro("육비 짱").sStoreBNum(1332111111).build();
+				.sMinDeleVery(20000).sStoreTime(1200).sStoreIntro("육비 짱").build();
 		assertEquals(1, sStoreDao.StoreAdd(store));
 		System.out.println(store);
 	}

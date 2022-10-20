@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/script/StoreRead.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <form id="update_form">
+            <input type="hidden" id="sStoreNum" name="sStoreNum">
+            <label for="sStoreName">가게이름</label>
+            <input id="sStoreName" type="text" name="sStoreName">
+            <br>
+            <img id="showLogo" height="240px">
+            <label for="logoimg">로고 사진</label>
+            <input id="logoimg" type="file" name="logoimg" accept=".jpg,.jpeg,.png,.gif">
+            <br>
+            <label for="sStoreAddress">가게주소</label>
+            <input id="sStoreAddress" type="text" name="sStoreAddress">
+            <br>
+            <label for="sMinDeleVery">최소주문금액</label>
+            <input id="sMinDeleVery" type="text" name="sMinDeleVery"> 원
+            <br>
+            <label for="sStoreTime">영업시간</label>
+            <input type="text" id="sStoreTime" maxlength="4" name="sStoreTime">
+            <br>
+            <label for="sStoreIntro">가게 소개말</label>
+            <input id="sStoreIntro" type="text" name="sStoreIntro">
+            <br>
+            <button id="storeUpdate"  type="button">정보 변경하기</button>
+        </form>
+    </div>
+</body>
+</html>

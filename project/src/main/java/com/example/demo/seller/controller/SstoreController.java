@@ -49,17 +49,9 @@ public class SstoreController {
 	}
 	
 	@GetMapping(value="/store" , produces=MediaType.APPLICATION_JSON_VALUE)
-	//public ResponseEntity<Read> read(@ModelAttribute Integer sStoreNum) {
 	public ResponseEntity<RestResponse> read(Integer sStoreNum) {
 		Optional<Read> store = service.ReadStore(sStoreNum);
 		store.get();
 		return ResponseEntity.ok(new RestResponse("OK", store, null));
-	}
-	
-	@PostMapping(value="/store/BnumOverlap")
-	@ResponseBody
-	public Integer Overlap(Integer sStoreBNum) {
-		Integer cnt = service.OverlapStoreBnum(sStoreBNum);
-		return cnt;
 	}
 }

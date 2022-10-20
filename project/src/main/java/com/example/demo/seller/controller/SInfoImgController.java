@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.example.demo.seller.dto.RestResponse;
 import com.example.demo.seller.dto.SInfoImgDto;
 import com.example.demo.seller.dto.SInfoImgDto.ForList;
 import com.example.demo.seller.entity.SinfoImg;
@@ -23,8 +24,8 @@ public class SInfoImgController {
 	private SInfoImgService service;
 	
 	@PostMapping(value="/img/save")
-	public ResponseEntity<SinfoImg> save(@ModelAttribute SInfoImgDto.save dto) {
-	return ResponseEntity.ok(service.saveImg(dto));
+	public ResponseEntity<RestResponse> save(SInfoImgDto.save dto) {
+	return ResponseEntity.ok(new RestResponse("OK", dto, null));
 	}
 	
 	@GetMapping(value="/img")

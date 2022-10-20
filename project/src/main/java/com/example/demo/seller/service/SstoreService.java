@@ -76,10 +76,4 @@ public class SstoreService {
 	public Integer DeleteStore(Integer sStoreNum) {
 		return storedao.StoreDelete(sStoreNum);
 	}
-	 
-	
-	public Integer OverlapStoreBnum(Integer sStoreBNum) {
-		Integer cnt = storedao.StoreBNumOverlap(sStoreBNum);
-			return cnt;
-	}
 }
