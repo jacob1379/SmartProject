@@ -20,12 +20,12 @@
 	values (#{cId}, #{cPassword}, #{cNickname}, #{cName}, #{cBirthday}, #{cPhone}, #{cEmail}, #{cProfile}, #{cLevel})
 </insert>
  
-<select id="cFindId" resultType="com.example.demo.consumer.dto.ConsumerDto$OutputFind">
-	select * from CONSUMER where C_EMAIL=#{cEmail}
+<select id="cFindId" resultType="com.example.demo.consumer.entity.Consumer">
+	select C_ID from CONSUMER where C_EMAIL=#{cEmail}
 </select>
 
-<select id="cFindPassword" resultType="com.example.demo.consumer.dto.ConsumerDto$OutputFind">
-	select * from CONSUMER where C_ID=#{cId}
+<select id="cFindPassword" resultType="com.example.demo.consumer.entity.Consumer">
+	select C_PASSWORD, C_EMAIL from CONSUMER where C_ID=#{cId}
 </select>
 
 <select id="cMemberRead" resultType="com.example.demo.consumer.entity.Consumer">
@@ -43,6 +43,7 @@
 		<if test="cBuyMoney!=null">C_BUY_MONEY=#{cBuyMoney},</if>
 		<if test="cLoginFailCount!=null">C_LOGIN_FAIL_COUNT=#{cLoginFailCount},</if>
 		<if test="cEnabled!=null">C_ENABLED=#{cEnabled},</if>
+		<if test="cProfile!=null">C_PROFILE=#{cProfile},</if>
 		<if test="cLevel!=null">C_LEVEL=#{cLevel},</if>
 	</trim>
 	where C_ID=#{cId}

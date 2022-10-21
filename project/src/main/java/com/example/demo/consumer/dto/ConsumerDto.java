@@ -82,22 +82,6 @@ public class ConsumerDto {
 		@NotEmpty(message="이메일은 필수입력입니다")
 		private String cEmail;
 	}
-
-	@Data
-	public static class OutputFind {
-		private String cId;
-		private String cPassword;
-		private String cEmail;
-	}
-	
-	@Data
-	public static class ChangePassword {
-		@NotEmpty(message="비밀번호는 필수입력입니다")
-		private String password;
-		
-		@NotEmpty(message="새 비밀번호는 필수입력입니다")
-		private String newPassword;
-	}
 	
 	@Data
 	@Builder
@@ -117,17 +101,19 @@ public class ConsumerDto {
 	}
 	
 	@Data
+	public static class ChangePassword {
+		@NotEmpty(message="비밀번호는 필수입력입니다")
+		private String cPassword;
+		@NotEmpty(message="새 비밀번호는 필수입력입니다")
+		private String newCPassword;
+	}
+	
+	@Data
 	@Builder
 	public static class Update {
-		private String cId;
-		private String cPassword;
 		private String cNickname;
 		private String cPhone;
 		private String cEmail;
 		private MultipartFile cProfile;
-		
-		public Consumer toEntity2() {
-			return Consumer.builder().cPassword(cPassword).cNickname(cNickname).cPhone(cPhone).cEmail(cEmail).build();
-		}
 	} 
 }

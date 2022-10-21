@@ -11,8 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.consumer.dto.ConsumerDto;
@@ -78,10 +80,25 @@ public class ConsumerController {
 		ConsumerDto.Read dto = service.read(cId);
 		return ResponseEntity.ok(new ConsumerResponseDto("OK", dto, null));
 	}
+	// 비밀번호 변경
+	//@PreAuthorize("isAuthentication()")
+	@PatchMapping(path="/consumer/password", produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ConsumerResponseDto> changePassword(@Valid ConsumerDto.ChangePassword dto, String cId, BindingResult bindingResult) {
+		service.changePassword(dto, cId);
+		return ResponseEntity.ok(new ConsumerResponseDto("OK", "비밀번호를 변경하였습니다", null));
+	}
 	// 회원정보 변경
-	@PostMapping(path="/consumer", produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ConsumerResponseDto> update(@Valid ConsumerDto.Update dto, BindingResult bindingResult) {
-		service.update(dto,dto.getCId());
+	// 원래는 PutMapping인데 파일 업로드를 처리하지 못함
+	//@PreAuthorize("isAuthenticated()")
+	@PostMapping(path="/consumer/update", produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ConsumerResponseDto> update(@Valid ConsumerDto.Update dto, String cId, BindingResult bindingResult) {
+		service.update(dto, cId);
 		return ResponseEntity.ok(new ConsumerResponseDto("OK", "정보를 변경하였습니다", "/consumer/read"));
+	}
+	// 회원탈퇴
+	@DeleteMapping(path="/consumer", produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ConsumerResponseDto> delete(String cId) {
+		service.delete(cId);
+		return ResponseEntity.ok(new ConsumerResponseDto("OK", "회원 정보를 삭제하였습니다", "/consumer/list"));
 	}
 }

@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.example.demo.consumer.dto.ConsumerDto;
 import com.example.demo.consumer.entity.Consumer;
 
 @Mapper
@@ -22,18 +21,17 @@ public interface ConsumerDao {
 	public Integer cMemberJoin(Consumer consumer);
 	
 	// 아이디 찾기
-	public Optional<ConsumerDto.OutputFind> cFindId(String cEmail);
+	public Optional<Consumer> cFindId(String cEmail);
 	
 	// 비밀번호 찾기
-	public Optional<ConsumerDto.OutputFind> cFindPassword(String cId);
+	public Optional<Consumer> cFindPassword(String cId);
 	
 	// 회원정보 보기
 	public Optional<Consumer> cMemberRead(String cId);
 
-	// 회원정보 수정
+	// 회원정보 변경
 	public Integer cMemberUpdate(Consumer consumer);
 	
 	// 회원탈퇴
-	public Integer cDeleteAccount(String cId);
-	
+	public Integer cDeleteAccount(String cId);	
 }

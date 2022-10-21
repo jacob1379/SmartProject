@@ -13,19 +13,20 @@
 	<logger name="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" level="trace" />
 	
 	<!--  log4jdbc 로깅 설정 -->
-	<!-- <logger name="jdbc.sqlonly" level="off"/>
-	<logger name="jdbc.connection" level="off"/>
-	<logger name="jdbc.resultsettable" level="off"/>
-	<logger name="jdbc.audit" level="off"/>
-	<logger name="jdbc.sqltiming" level="off"/>
-	<logger name="jdbc.resultset" level="off"/> -->
-	
+	<!-- <logger name="jdbc.sqlonly" level="OFF"/>
+	<logger name="jdbc.connection" level="OFF"/>
+	<logger name="jdbc.resultsettable" level="OFF"/>
+	<logger name="jdbc.audit" level="OFF"/>
+	<logger name="jdbc.sqltiming" level="OFF"/>
+	<logger name="jdbc.resultset" level="OFF"/> -->
+	 
 	<logger name="jdbc.sqlonly" level="info"/>
 	<logger name="jdbc.connection" level="warn"/>
 	<logger name="jdbc.resultsettable" level="info"/>
 	<logger name="jdbc.audit" level="warn"/>
 	<logger name="jdbc.sqltiming" level="warn"/>
 	<logger name="jdbc.resultset" level="warn"/>
+	
 	<root level="warn">
 		<appender-ref ref="console" />
 	</root>

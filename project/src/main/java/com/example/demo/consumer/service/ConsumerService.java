@@ -46,6 +46,7 @@ public class ConsumerService {
 	public void cTest() {
 		System.out.println("!!!!!!!!!!");
 	}
+	
 	// 아이디 중복확인
 	public void idCheck(String cId) {
 		if(dao.cIdCheck(cId))
@@ -96,7 +97,7 @@ public class ConsumerService {
 	}
 	// 아이디 찾기
 	public void cFindId(ConsumerDto.FindId dto) {
-		ConsumerDto.OutputFind consumer = dao.cFindId(dto.getCEmail()).orElseThrow(()->new ConsumerNotFoundException());
+		Consumer consumer = dao.cFindId(dto.getCEmail()).orElseThrow(()->new ConsumerNotFoundException());
 		mailUtil.sendFindIdMail("hompajo27@gmail.com", dto.getCEmail(), consumer.getCId());
 	}
 	// 비밀번호 찾기
@@ -104,7 +105,7 @@ public class ConsumerService {
 	// 이메일 확인 -> 틀리면 ConsumerNotFoundException
 	// 20글자 임시 비밀번호 생성 -> 암호화 -> 비번 변경 -> 메일 발송
 	public void cFindPassword(ConsumerDto.FindPassword dto) {
-		ConsumerDto.OutputFind consumer = dao.cFindPassword(dto.getCId()).orElseThrow(()->new ConsumerNotFoundException());
+		Consumer consumer = dao.cFindPassword(dto.getCId()).orElseThrow(()->new ConsumerNotFoundException());
 		if(consumer.getCEmail().equals(dto.getCEmail())==false)
 			throw new ConsumerNotFoundException();
 		String newPassword = RandomStringUtils.randomAlphanumeric(20);
@@ -120,12 +121,22 @@ public class ConsumerService {
 		dto.setCProfile(profilePath + dto.getCProfile());
 		return dto;
 	}
-	// 비밀번호, 닉네임, 전화번호, 이메일, 프로필 변경
-	public Integer update(ConsumerDto.Update dto, String loginId) {
+	// 비밀번호 변경
+	// 아이디로 검색 -> 없으면 ConsumerNotFoundException
+	// 비밀번호를 맞춰본다 -> 실패하면 예외처리 / 성공하면 새 비밀번호 암호화 후 저장
+	public void changePassword(ConsumerDto.ChangePassword dto, String cId) {
+		Consumer consumer = dao.cFindPassword(cId).orElseThrow(()->new ConsumerNotFoundException());
+		String encodedPassword = consumer.getCPassword();
+		if(passwordEncoder.matches(dto.getCPassword(), encodedPassword)==false)
+			throw new JobFailException("비밀번호를 변경하지 못했습니다");
+		dao.cMemberUpdate(Consumer.builder().cId(cId).cPassword(passwordEncoder.encode(dto.getNewCPassword())).build());
+	}
+	// 회원정보 변경
+	public Integer update(ConsumerDto.Update dto, String cId) {
 		String newCNickname = dto.getCNickname();
 		String newCPhone = dto.getCPhone();
 		String newCEmail = dto.getCEmail();
-		Consumer consumer = dao.cMemberRead(loginId).orElseThrow(ConsumerNotFoundException::new);
+		Consumer consumer = dao.cMemberRead(cId).orElseThrow(ConsumerNotFoundException::new);
 		if(newCNickname==null && newCPhone==null && newCEmail==null) {
 			newCNickname = consumer.getCNickname();
 			newCPhone = consumer.getCPhone();
@@ -162,7 +173,7 @@ public class ConsumerService {
 		
 		MultipartFile cProfile = dto.getCProfile();
 		String newCProfileName = "default.jpg";
-		if(cProfile==null || cProfile.isEmpty()==true)
+		if(newCNickname==null && newCPhone==null && newCEmail==null && (cProfile==null || cProfile.isEmpty()==true))
 			throw new JobFailException("변경할 값이 없습니다");
 		
 		if(cProfile!=null && cProfile.isEmpty()==false) {
@@ -181,8 +192,15 @@ public class ConsumerService {
 				e.printStackTrace();
 			}
 		}
-		return dao.cMemberUpdate(Consumer.builder().cId(loginId).cNickname(newCNickname)
+		return dao.cMemberUpdate(Consumer.builder().cId(cId).cNickname(newCNickname)
 				.cPhone(newCPhone).cEmail(newCEmail).cProfile(newCProfileName).build());
+	}
+	// 회원 탈퇴
+	public Integer delete(String cId) {
+		if(dao.cIdCheck(cId)==false) {
+			throw new ConsumerNotFoundException();
+		}
+		return dao.cDeleteAccount(cId);
 	}
 	
 }

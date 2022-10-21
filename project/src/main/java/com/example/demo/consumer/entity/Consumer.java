@@ -3,7 +3,6 @@ package com.example.demo.consumer.entity;
 import java.time.LocalDate;
 
 import com.example.demo.consumer.dto.ConsumerDto;
-import com.example.demo.consumer.dto.ConsumerDto.Read;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,6 +25,7 @@ public class Consumer {
 	private String cPhone;
 	private String cEmail;
 	private String checkcode;
+	private String cRole;
 	private Integer cLoginFailCount;
 	private Boolean cEnabled;
 	private Integer cBuyCount;
