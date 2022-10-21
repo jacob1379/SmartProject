@@ -1,6 +1,9 @@
 package com.example.demo.seller.entity;
 
 
+import com.example.demo.seller.dto.SstoreDto;
+import com.example.demo.seller.dto.SstoreDto.Read;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,5 +36,10 @@ public class Sstore {
 		this.sStoreLogo = storeLogoName;
 	}
 	
-	
+	public Read toDto() {
+		return SstoreDto.Read.builder().sStoreName(sStoreName).sStoreNum(sStoreNum)
+				.sStoreAddress(sStoreAddress).sStoreLogo(sStoreLogo).sMinDeleVery(sMinDeleVery)
+				.sStoreTime(sStoreTime).sStoreIntro(sStoreIntro).sStoreStatus(sStoreStatus)
+				.sStoreReview(sStoreReview).build();
+	}
 }

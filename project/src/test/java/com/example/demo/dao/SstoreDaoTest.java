@@ -20,7 +20,7 @@ public class SstoreDaoTest {
 	SstoreDao sStoreDao;
 	
 	@Transactional
-	@Test
+	//@Test
 	public void StoreAddTest() {
 		Sstore store = Sstore.builder().sStoreName("육심").sStoreAddress("학익동3-1")
 				.sMinDeleVery(20000).sStoreTime(1200).sStoreIntro("육비 짱").build();
@@ -39,9 +39,9 @@ public class SstoreDaoTest {
 		sStoreDao.StoreDelete(3);
 	}
 	
-	//@Test
+	@Test
 	public void storeReadTest() {
-		assertNotNull(sStoreDao.StoreRead(1).get());
+		//assertNotNull(sStoreDao.StoreRead(1).get());
 		//assertNull(sStoreDao.StoreRead(3).get());
 		}
 	

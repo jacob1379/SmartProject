@@ -17,6 +17,7 @@ public class SstoreDto {
 	
 	
 	@Data
+	@Builder
 	public static class Read {
 		private Integer sStoreNum;
 		private String sStoreName;
@@ -27,6 +28,8 @@ public class SstoreDto {
 		private String sStoreIntro;
 		private Integer sStoreStatus;
 		private String sStoreReview;
+		private Integer sCategoryNum;
+		private Integer sLocationCode;	
 	}
 	@Data
 	public static class ForList {
@@ -62,6 +65,7 @@ public class SstoreDto {
 	@Builder
 	public static class update {
 		
+		private String sStoreName;
 		private Integer sStoreNum;
 		private String sStoreAddress;
 		private Integer sMinDeleVery;
@@ -70,7 +74,7 @@ public class SstoreDto {
 		private Integer sStoreStatus;
 		
 		public Sstore toEntity() {
-			return Sstore.builder().sStoreAddress(sStoreAddress)
+			return Sstore.builder().sStoreName(sStoreName).sStoreAddress(sStoreAddress)
 					.sMinDeleVery(sMinDeleVery).sStoreTime(sStoreTime)
 					.sStoreIntro(sStoreIntro).sStoreStatus(sStoreStatus).sStoreNum(sStoreNum).build();
 		}

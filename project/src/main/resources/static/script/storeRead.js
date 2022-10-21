@@ -1,4 +1,12 @@
-const sno = 21;
+const sno = 20;
+async function getResult() {
+    const result = await $.ajax({
+        url : "/store",
+        method : "get",
+        data : {sStoreNum : sno}
+    });
+    return result ;
+}
 function loadImg () {
     const file = $("#logoimg")[0].files[0];
     const maxSize = 1024*1024;
@@ -16,11 +24,11 @@ function loadImg () {
     return true;
 }
 function placeholder(a) {
-	$("#sStoreName").attr('placeholder',a.result.sstoreName);
-$("#sStoreAddress").attr('placeholder',a.result.sstoreAddress);
-$("#sMinDeleVery").attr('placeholder',a.result.sminDeleVery);
-$("#sStoreTime").attr('placeholder',a.result.sstoreTime);
-$("#sStoreIntro").attr('placeholder',a.result.sstoreIntro);
+	$("#sStoreName").attr('value',a.result.sstoreName);
+$("#sStoreAddress").attr('value',a.result.sstoreAddress);
+$("#sMinDeleVery").attr('value',a.result.sminDeleVery);
+$("#sStoreTime").attr('value',a.result.sstoreTime);
+$("#sStoreIntro").attr('value',a.result.sstoreIntro);
 $("#sStoreNum").val(a.result.sstoreNum);
 }
 
@@ -40,13 +48,9 @@ function storeUpdate() {
 }
 $(document).ready(async ()=>{
 	$("#logoimg").on("change", loadImg);
-	const a = await $.ajax({
-        url : "/store",
-        method : "get",
-        data : {sStoreNum : sno}
-    });
+	const a  = getResult();
+    $("#showLogo").attr("src",a.result.sstoreLogo);
     console.log(a.result);
-    
     placeholder(a);
     $("#storeUpdate").click(()=>{
         storeUpdate();
