@@ -1,12 +1,4 @@
 const sno = 20;
-async function getResult() {
-    const result = await $.ajax({
-        url : "/store",
-        method : "get",
-        data : {sStoreNum : sno}
-    });
-    return result ;
-}
 function loadImg () {
     const file = $("#logoimg")[0].files[0];
     const maxSize = 1024*1024;
@@ -48,7 +40,11 @@ function storeUpdate() {
 }
 $(document).ready(async ()=>{
 	$("#logoimg").on("change", loadImg);
-	const a  = getResult();
+	const a = await $.ajax({
+        url : "/store",
+        method : "get",
+        data : {sStoreNum : sno}
+    });
     $("#showLogo").attr("src",a.result.sstoreLogo);
     console.log(a.result);
     placeholder(a);
