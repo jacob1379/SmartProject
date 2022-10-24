@@ -42,9 +42,9 @@
 		 order by ao.a_order_num
 	</select>
 	
-	<delete id="cOrderCancel">
-		delete from A_ORDER where A_ORDER_NUM = #{aOrderNum} and C_ID = #{cId}
-	</delete>
+	<update id="cOrderCancel">
+		update A_ORDER set A_ORDER_STATUS='주문취소' where A_ORDER_NUM = #{aOrderNum} and C_ID = #{cId}
+	</update>
 	
 	<update id="totalPriceUpdate">
 		update A_ORDER set A_TOTAL_PRICE = #{aTotalPrice} where A_ORDER_NUM = #{aOrderNum} and C_ID = #{cId}
@@ -75,9 +75,8 @@
 		 from a_order ao left outer join a_order_detail aod on ao.a_order_num = aod.a_order_num
 		 left outer join s_menu sm on aod.s_menu_code = sm.s_menu_code
 		 left outer join s_menu_group smg on sm.S_GROUP_NUM = smg.s_group_num
-		 <where>
-		 	<if test="aOrderNum != null">ao.a_order_num = #{aOrderNum}</if>
-		 </where>
+		 where ao.A_ORDER_STATUS = '배달완료'
+		 or ao.A_ORDER_STATUS = '주문취소'
 		  and C_ID = #{cId}
 		  order by ao.a_order_num
 	</select>

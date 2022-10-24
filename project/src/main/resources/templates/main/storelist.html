@@ -3,6 +3,10 @@
 <head>
 <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script src="/script/locationcode.js"></script>
+<script src="/script/logininfo.js"></script>
+
 <title>Insert title here</title>
 
 <script>
@@ -11,8 +15,9 @@
 	}
 	
 	async function getstorelistprint(categorynum) {
-		const loactioncode = 4290;
-		const param = {sCategoryNum : categorynum, sLocationCode : loactioncode}
+		const locationcode = await getLoctionCode();
+		console.log(locationcode)
+		const param = {sCategoryNum : categorynum, sLocation : locationcode}
 		
 		const data = await $.ajax({
 			url : "/storeinfo/readstorelist",

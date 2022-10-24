@@ -17,6 +17,11 @@ public class ConsumerViewController {
 		
 	}
 	
+	@GetMapping("/order/orderlist")
+	public void orderlist() {
+		
+	}
+	
 	@GetMapping("/order/ordersuccess")
 	public void orderSuccess() {
 		

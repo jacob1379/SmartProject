@@ -28,7 +28,7 @@ public interface OrderDao {
 	public Integer totalPriceUpdate(Integer aOrderNum, Integer aTotalPrice, String cId);
 	
 	// 주문 상세 내역 출력
-	public List<OrderDto.ListAllDto> cOrderListReadAll(Integer aOrderNum, String cId);
+	public List<OrderDto.ListAllDto> cOrderListReadAll(String cId);
 	
 	// 주문번호 찾기
 	public Boolean findByOrderNum(Integer aOrderNum, String cId);

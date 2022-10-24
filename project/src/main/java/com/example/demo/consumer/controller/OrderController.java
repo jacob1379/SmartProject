@@ -33,9 +33,9 @@ public class OrderController {
 	}
 	
 	@GetMapping(value = "/consumer/order/all", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResponseDto> listAll(Integer aOrderNum, String cId) {
+	public ResponseEntity<ResponseDto> listAll(String cId) {
 		
-		return ResponseEntity.ok(new ResponseDto("주문내역 출력", service.OrderListAll(aOrderNum, cId)));
+		return ResponseEntity.ok(new ResponseDto("주문내역 출력", service.OrderListAll(cId)));
 	}
 	
 	@DeleteMapping(value = "/consumer/order/cansle", produces = MediaType.APPLICATION_JSON_VALUE)

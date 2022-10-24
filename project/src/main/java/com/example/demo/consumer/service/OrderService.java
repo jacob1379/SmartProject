@@ -66,9 +66,9 @@ public class OrderService {
 		return aor;
 	}
 
-	public List<OrderDto.ListAllDto> OrderListAll(Integer aOrderNum, String cId) {	 
+	public List<OrderDto.ListAllDto> OrderListAll(String cId) {	 
 		
-		return aorderDao.cOrderListReadAll(aOrderNum, cId);
+		return aorderDao.cOrderListReadAll(cId);
 	}
 
 	public List<OrderDto.ListAllDto> cOrderListRead(OrderReadDto dto) {

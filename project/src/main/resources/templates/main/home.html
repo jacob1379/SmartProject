@@ -1,99 +1,91 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script src="/script/locationcode.js"></script>
+<script src="/script/logininfo.js"></script>
+
 <title>Insert title here</title>
 
 
-
 <script>
-	function saveCoords(latitude, longitude) {
 
-    	localStorage.setItem('latitude', JSON.stringify(latitude));
-    	localStorage.setItem('longitude', JSON.stringify(longitude));
-    }
+	async function printcategorylist() {
 	
-    function success({ coords, timestamp }) {
-
-        const latitude = coords.latitude;   // 위도
-        const longitude = coords.longitude; // 경도
-    	
-        saveCoords(latitude, longitude)
-    	
-    }
-    
-
-    function getUserLocation() {
-        if (!navigator.geolocation) {
-            throw "위치 정보가 지원되지 않습니다.";
-        }
-        
-      	navigator.geolocation.getCurrentPosition(success);
-      	
-    }
-	
-    async function getStringLocation() {
-		const latitude = localStorage.getItem("latitude");
-		const longitude = localStorage.getItem("longitude");
-		
-		const result =		
-		await $.ajax({
-			method : "GET",
-			url : "http://dapi.kakao.com/v2/local/geo/coord2regioncode.JSON?x="+longitude+"&y="+latitude,
-			beforeSend : function (xhr) {
-				xhr.setRequestHeader("Authorization","KakaoAK " + "31c700d7fcde4a5b78984aba17a7d42e");
-			}
-		});
-	
-		return result.documents;
-    }
-    
-    async function printcategorylist() {
-		
 		const list = await $.ajax({
 			url : "/storeinfo/readcategory"
 		})    
-		
+	
+		const catediv = $("<div>").attr("id","categoryList").appendTo('#section');
 		for(const listca of list.result) {
-			const a = $("<a>").attr("href","/main/storelist?cate=" + listca.scategoryNum).appendTo('#section')
+			const a = $("<a>").attr("href","/main/storelist?cate=" + listca.scategoryNum).attr("class","catelink").appendTo(catediv)
 			$("<div>").text(listca.scategoryName).appendTo(a);
-		}
-    }
-    
+		}	
+	}
+	
 	$(document).ready(async function() {
 		
-		printcategorylist()
+		await getLogininfo();
+		
+		await printcategorylist();
 		
 		$('#NowLocationButton').one("click", async function(){
 			
 			getUserLocation();
 			
 			const nowlocation = await getStringLocation();
-				
-			const result = nowlocation[0].region_3depth_name;
-			$("<span>").text(nowlocation[0].address_name).attr("value",result).attr("id","where").appendTo("#location");
 			
+			$("#nowlocation").attr("value", nowlocation[0].address_name);
 			
 		})
+		
+		$(document).on("click",".catelink", async function(){
+			
+			if($('#nowlocation').val() == "") {
+				$(".catelink").removeAttr("href")
+			}
+			$("#categoryList").remove();
+			await printcategorylist()
+		})
+		
+		$("#nowlocation").on("input", async function(){
+			
+			
+			
+			const search = $(this).val();
+			console.log(search)
+			
+			
+			const result = await $.ajax({
+				url : "/dapi.kakao.com/v2/local/search/keyword.JSON",
+				data : {query : search},
+				beforeSend: function(xhr) {
+					xhr.setRequestHeader("Authorization", "KakaoAK " + "31c700d7fcde4a5b78984aba17a7d42e");
+				}
+			})
+			
+			console.log(result);
+		})
 	})
+	
 </script>
 </head>
+
 <body>
 	<header id="header" th:replace="/fragments/header"></header>
+	<h1>메인페이지 작업중</h1>
+
 	<nav id="nav">
 		<div id="location">
-			<button id= "NowLocationButton"> 현위치 가져오기 </button>
+			<button id="NowLocationButton">현위치 가져오기</button>
+			<input type="text" id="nowlocation" />
 		</div>
 	</nav>
-	
-	<section id="section">
-		
-	</section>
-	<h1> 메인페이지 작업중 </h1>
- 
-	
-	
-	
+
+	<section id="section"></section>
 </body>
 </html>
