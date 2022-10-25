@@ -1,4 +1,4 @@
-const sno = 20;
+const sno = location.search.substr(11);
 function loadImg () {
     const file = $("#logoimg")[0].files[0];
     const maxSize = 1024*1024;

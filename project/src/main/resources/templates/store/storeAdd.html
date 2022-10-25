@@ -4,7 +4,10 @@
     <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="/css/semantic.css" type="text/css">
+    <script src="/script/semantic.js"></script>
     <script src="/script/StoreAdd.js"></script>
+    
     <title>가게 추가</title>
    
 </head>
@@ -12,7 +15,13 @@
     
     <div id="page">
         
-            
+            <header id="header"></header>
+        <nav id="nav"></nav>
+        <aside id="aside">
+            <ul id="asideUl">
+            </ul>
+        </aside>
+        <section id="section">
         <form id="add_form">
             <label for="sStoreName">가게이름</label>
             <input id="sStoreName" type="text" name="sStoreName">
@@ -48,7 +57,8 @@
             <button id="storeAdd"  type="button">가게 등록</button>
         </form>
 
-        
+        </section>
+    <footer id="footer"></footer>
     </div>
 
 </body>

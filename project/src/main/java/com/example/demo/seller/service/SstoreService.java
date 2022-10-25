@@ -26,7 +26,7 @@ public class SstoreService {
 	private String profilePath;
 	
 	
-	public void AddStore(SstoreDto.write dto, MultipartFile logoimg) {
+	public Integer AddStore(SstoreDto.write dto, MultipartFile logoimg) {
 		Sstore store = dto.toEntity();
 		MultipartFile storeLogo= logoimg;
 		String storeLogoName = "no image";
@@ -43,7 +43,9 @@ public class SstoreService {
 			}		
 		}
 		store.addStoreInfo(storeLogoName);
-		storedao.StoreAdd(store);
+		
+		System.out.println(storedao.StoreAdd(store));
+		return store.getSStoreNum();
 	}
 	
 	

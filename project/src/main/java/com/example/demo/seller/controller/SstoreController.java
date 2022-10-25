@@ -34,8 +34,8 @@ public class SstoreController {
 	@PostMapping(value="/store/new" , produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<RestResponse> write( SstoreDto.write dto, MultipartFile logoimg) {
 		System.out.println(logoimg);
-		service.AddStore(dto, logoimg);
-		return ResponseEntity.ok(new RestResponse("OK", "가게 등록 성공", "/"));
+		Integer store = service.AddStore(dto, logoimg);
+		return ResponseEntity.ok(new RestResponse("OK", store, "/"));
 	}
 	
 	@PutMapping(value="/store/update", produces=MediaType.APPLICATION_JSON_VALUE)

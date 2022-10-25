@@ -16,20 +16,21 @@ function loadImg () {
 }
 
 
-function storeAdd() {
+async function storeAdd() {
     const formData = new FormData($("#add_form")[0]);
-    console.log(formData);
-    $.ajax({
-        url : "/store/new",
-        method : "post",
-        data : formData,
-        processData : false,
-        contentType : false
-    }).done(()=>{
-        alert('success!!');
-    }).fail(()=>{
-        alert('fail!!');
-    })
+        await $.ajax({
+            url : "/store/new",
+            method : "post",
+            data : formData,
+            processData : false,
+            contentType : false
+        }).done((e)=>{
+            alert('success!!');
+            console.log(e);
+            location.href = "http://localhost:8087/store/storeRead?sStoreNum="+e.result;
+        }).fail(()=>{
+            alert('fail!!');
+        })
 };
 
 $(document).ready(()=>{
