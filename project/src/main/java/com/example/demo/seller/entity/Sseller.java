@@ -14,33 +14,38 @@ import lombok.*;
 @Builder
 public class Sseller {
 	private String sId;
-	private String sBusinessNum;
 	private String sPassword;
 	private String sName;
-	private LocalDate sBirth;
-	private Integer sPhone;
 	private String sEmail;
-	private Integer sStoreNum;
+	private LocalDate sBirth;
 	private LocalDate sJoinday;
+	private String sProfile;
 	private String sRole;
 	private Integer sLoginFailCnt;
 	private Boolean sEnabled;
 	private String sCheckcode;
-	private sLevel sLevel;
+	private Integer sBuyCount;
+	private Integer sBuyMoney;
+	private sLevel sLevels;
+	private Integer sPhone;
+	private Integer sStoreNum;
+	private String sBusinessNum;
 
-	public void sAddJoinInfo(String checkcode, String encodePassword, sLevel sLevels) {
+	public void sAddJoinInfo(String profileName, String checkcode, String encodePassword, sLevel sLevels) {
+		this.sProfile = profileName;
 		this.sCheckcode = checkcode;
 		this.sPassword = encodePassword;
-		this.sLevel = sLevels;
+		this.sLevels = sLevels;
 	}
 
 	public Read toDto() {
 		return SsellerDto.Read.builder()
-				.sId(sId).sName(sName)
+				.sId(sId)
+				.sName(sName)
 				.sEmail(sEmail)
 				.sBirth(sBirth)
 				.sJoinday(sJoinday)
-				.slevel(sLevel)
+				.slevels(sLevels)
 				.build();
 	}
 }

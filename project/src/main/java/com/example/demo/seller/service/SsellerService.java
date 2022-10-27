@@ -1,18 +1,21 @@
 package com.example.demo.seller.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 import javax.mail.MessagingException;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.seller.dao.SsellerDao;
 import com.example.demo.seller.dto.SsellerDto;
@@ -31,7 +34,11 @@ public class SsellerService {
 	@Autowired
 	private SsellerMailUtil mailUtil;
 	@Autowired
-	private PasswordEncoder passwordEncoder; // 시큐리티 할때 쓰는듯?
+	private PasswordEncoder passwordEncoder;
+	@Value("c:/upload/profile")
+	private String profileFolder;
+	@Value("http://localhost:8083/profile/")
+	private String profilePath;
 	
 	@PostConstruct
 	public void que() {
@@ -46,11 +53,27 @@ public class SsellerService {
 			throw new SellerJobFailException("사용중인 이메일 입니다");
 		
 		Sseller seller = dto.toEntity();
+		MultipartFile profile = dto.getSProfile();
+		
+		String profileName = "default.jpg";
+		// 프로필 사진이 있으면 저장하고 변경
+		if(profile!=null && profile.isEmpty()==false) {
+			//폴더명, 파일명으로 빈 파일을 생성
+			File file = new File(profileFolder, profile.getOriginalFilename());
+			try {
+				profile.transferTo(file);
+				profileName = profile.getOriginalFilename();
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		
 		// 체크코드 생성, 비밀번호 암호화
 		String Checkcode = RandomStringUtils.randomAlphanumeric(20);
 		String encodedPassword = passwordEncoder.encode(seller.getSPassword());
-		seller.sAddJoinInfo(Checkcode, encodedPassword, sLevel.BRONZE);
+		seller.sAddJoinInfo(profileName, Checkcode, encodedPassword, sLevel.BRONZE);
 		sellerdao.SellerSave(seller);
 		mailUtil.sSendCheckMail("projectseller1111@gmail.com", seller.getSEmail(), Checkcode);
 	}
@@ -63,7 +86,7 @@ public class SsellerService {
 
 	// 비밀번호 초기화
 	public void sTemporaryPassword(SsellerDto.stPassword dto) throws MessagingException {
-		Sseller seller = sellerdao.stPassword(dto.getSId()).orElseThrow(()->new SellerNotFoundException());
+		Sseller seller = sellerdao.sFindId(dto.getSId()).orElseThrow(()->new SellerNotFoundException());
 		if(seller.getSEmail().equals(dto.getSEmail())==false)
 			throw new SellerNotFoundException();
 		String newPassword = RandomStringUtils.randomAlphanumeric(20);
@@ -73,7 +96,7 @@ public class SsellerService {
 	
 	// 비밀번호 변경
 	public void sChangePassword(SsellerDto.scPassword dto, String loginId) {
-		Sseller seller = sellerdao.scPassword(loginId).orElseThrow(()->new SellerNotFoundException());
+		Sseller seller = sellerdao.sFindId(loginId).orElseThrow(()->new SellerNotFoundException());
 		String encodedPassword = seller.getSPassword();
 		if(passwordEncoder.matches(dto.getSPassword(), encodedPassword)==false)
 			throw new SellerJobFailException("비밀번호를 변경하지 못했습니다");
@@ -85,6 +108,7 @@ public class SsellerService {
 		SsellerDto.Read dto = seller.toDto();
 		Long days = ChronoUnit.DAYS.between(dto.getSJoinday(), LocalDate.now());
 		dto.setDays(days);
+		dto.setSProfile(profilePath + dto.getSProfile());
 		return dto;
 	}
 	
@@ -96,20 +120,39 @@ public class SsellerService {
 	// 스프링 스케쥴러
 	@Scheduled(cron="0 0 4 ? * THU")
 	public void notCheckJoinDelete() {
-		List<String> sId = sellerdao.sFindCheckcodeIsNotEmpty();
-		sellerdao.sNotCheckId(sId);
+		List<String> sIds = sellerdao.sFindCheckcodeIsNotEmpty();
+		sellerdao.sNotCheckId(sIds);
 	}
 	
-	/*
-	// 정보 변경
 	public Integer update(SsellerDto.Update dto, String loginId) {
 		String newEmail = dto.getSEmail();
-		if(newEmail==null)
+		MultipartFile profile = dto.getProfile();
+		if(newEmail==null && (profile==null || profile.isEmpty()==true))
 			throw new SellerJobFailException("변경할 값이 없습니다");
 		Sseller seller = sellerdao.sFindId(loginId).orElseThrow(SellerNotFoundException::new);
-		return sellerdao.SellerUpdate(Sseller.builder().sId(loginId).sEmail(newEmail).build());
+		if(newEmail==null)
+			newEmail = seller.getSEmail();
+		String newProfileName = "default.jpg";
+		if(profile!=null && profile.isEmpty()==false) {
+			File oldProfile = new File(profilePath, seller.getSProfile());
+			// 새 프사는 일단 기본 프사인 default.jpg
+			if(oldProfile.exists()) 
+				oldProfile.delete();
+			File newProfile = new File(profileFolder, profile.getOriginalFilename());
+			try {
+				profile.transferTo(newProfile);
+				// 프사 저장에 성공하면 새 프사 이름을 변경
+				newProfileName = profile.getOriginalFilename();
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}	
+		}
+		return sellerdao.SellerUpdate(Sseller.builder().sId(loginId)
+				.sProfile(newProfileName).sEmail(newEmail).build());
 	}
-	*/
+
 	// 회원 탈퇴
 	public Integer sellerOut(String loginId) {
 		if(sellerdao.SellerExistsById(loginId)==false)
@@ -117,21 +160,6 @@ public class SsellerService {
 		return sellerdao.sDeleteId(loginId);
 	}
 	
-/*	
-	public Optional<SsellerDto.Read> Readimport(String sId) {
-		return sellerdao.SellerRead(sId);
-	}
-*/
-	// 판매자 회원 정보 수정 (임시)
-	public Integer update(SsellerDto.Update dto) {
-		return sellerdao.SellerUpdate(dto.toEntity());
-	}
-
-	/*
-	public Integer delete(String sId) {
-		return sellerdao.SellerDelete(sId);
-	}
-*/
 	// 판매자 사업자번호 충복 확인
 	public void sBNumOverlap(String sBusinessNum) {
 		if (sellerdao.SellerBusinessNumOverlap(sBusinessNum))

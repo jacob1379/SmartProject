@@ -6,19 +6,25 @@
 		<!-- <selectKey keyProperty="sId" order="BEFORE" resultType="int"> select 
 			nvl(max(S_ID), 0)+1 from S_SELLER </selectKey> -->
 		insert into
-		S_SELLER(S_ID,S_BUSINESS_NUM,S_PASSWORD,S_NAME,S_BIRTH,S_PHONE,S_EMAIL, S_LEVELS)
+		S_SELLER(S_ID,S_PASSWORD,S_NAME,S_EMAIL,S_BIRTH,S_PROFILE,S_LEVELS,S_PHONE,S_BUSINESS_NUM)
 		values
-		(#{sId},#{sBusinessNum},#{sPassword},#{sName},#{sBirth},#{sPhone},#{sEmail},#{sLevel})
+		(#{sId},#{sPassword},#{sName},#{sEmail},#{sBirth},#{sProfile},#{sLevels},#{sPhone},#{sBusinessNum})
 	</insert>
 
 	<update id="SellerUpdate">
 		update S_SELLER
-		<trim prefix="set" suffixOverrides=",">
-			<if test="sPassword != null">S_PASSWORD=#{sPassword},</if>
-			<if test="sName != null">S_NAME=#{sName},</if>
-			<if test="sPhone != null">S_PHONE=#{sPhone},</if>
-			<if test="sEmail != null">S_EMAIL=#{sEmail},</if>
-		</trim>
+	  <trim prefix="set" suffixOverrides=",">
+	   		<if test="sPassword!=null">S_PASSWORD=#{sPassword},</if>
+	  		<if test="sEmail!=null">S_EMAIL=#{sEmail},</if>
+	  		<if test="sProfile!=null">S_PROFILE=#{sProfile},</if>
+	  		<if test="sRole!=null">S_ROLE=#{sRole},</if>
+	  		<if test="sLoginFailCnt!=null">S_LOGINFAILCNT=#{sLoginFailCnt},</if>
+	  		<if test="sEnabled!=null">S_ENABLED=#{sEnabled},</if>
+	  		<if test="sCheckcode!=null">S_CHECKCODE=#{sCheckcode},</if>
+	  		<if test="sBuyCount!=null">S_BUYCOUNT=#{sBuyCount},</if>
+	  		<if test="sBuyMoney!=null">S_BUYMONEY=#{sBuyMoney},</if>
+	  		<if test="sLevels!=null">S_LEVELS=#{sLevels},</if>
+	  </trim>
 		where S_ID=#{sId}
 	</update>
 
@@ -36,7 +42,7 @@
 	<select id="sFindId" resultType="com.example.demo.seller.entity.Sseller">
 		select * from S_SELLER where S_ID=#{sId} and rownum &lt;=1
 	</select>
-	
+<!-- 	
 	<select id="stPassword" resultType="com.example.demo.seller.entity.Sseller">
 		select * from S_SELLER where S_ID=#{sId} and rownum &lt;=1
 	</select>
@@ -44,7 +50,7 @@
 	<select id="scPassword" resultType="com.example.demo.seller.entity.Sseller">
 		select * from S_SELLER where S_PASSWORD=#{sPassword} and rownum &lt;=1
 	</select>
-	
+	 -->
 	<select id="sFindByEmail" resultType="com.example.demo.seller.entity.Sseller">
 		select * from S_SELLER where S_EMAIL=#{sEmail} and rownum &lt;=1
 	</select>

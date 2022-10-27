@@ -43,10 +43,9 @@ public interface SsellerDao {
 	
 	public Optional<Sseller> sFindId(String sId);
 	
-	// ?
+	
 	public Optional<Sseller> sFindCheckcode(String sCheckcode);
 	
-	// ?
 	public List<String> sFindCheckcodeIsNotEmpty();
 	
 	public Integer sNotCheckId(List<String> sId);
