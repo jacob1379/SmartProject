@@ -12,7 +12,12 @@ public class SViewController {
 		
 	}
 	@GetMapping("/store/storeRead")
-	public void streRead() {
+	public void storeRead() {
+		
+	}
+	
+	@GetMapping("/store/storeOrder")
+	public void storeOrder() {
 		
 	}
 

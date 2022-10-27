@@ -5,30 +5,33 @@
 
 #header {
     height: 120px;
-    background-color: beige;
+    background-color: #15edbb;
 }
 #aside {
     width: 250px;
-    height: 750px;
-    background-color: blanchedalmond;
     float: left;
+    text-align: center;
     
 }
 #section {
     float: right;
-    background-color: aqua;
     width: 1175px;
-    height: 750px;
+    height: auto;
+    border-left: 1px solid black;
+    padding: 1cm;
 }
 #footer {
     height: 120px;
     background-color: coral;
     clear: both;
 }
-button {
-    margin-top: 5px;
-    margin-bottom: 5px;
-    border-radius: 10px;
-    width: 90px;
-    height: 30px;
+
+#aside button {
+    font-size: 0.7cm;
+    margin-bottom: 1cm;
+    border: 0ch;
+    width: 250px;
+}
+#aside button:hover {
+    transition: 1s;
 }

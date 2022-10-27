@@ -26,8 +26,8 @@ public class SstoreService {
 	private String profilePath;
 	
 	
-	public Integer AddStore(SstoreDto.write dto, MultipartFile logoimg) {
-		Sstore store = dto.toEntity();
+	public Integer AddStore(SstoreDto.write dto, MultipartFile logoimg,String loginId) {
+		Sstore store = dto.toEntity().addSeller(loginId);
 		MultipartFile storeLogo= logoimg;
 		String storeLogoName = "no image";
 		
@@ -52,17 +52,16 @@ public class SstoreService {
 	
 	
 	public Read ReadStore(Integer sStoreNum) {
+		
 		SstoreDto.Read dto= storedao.StoreRead(sStoreNum);
-		
 		dto.setSStoreLogo(profilePath + dto.getSStoreLogo());
-		
 		return dto;
 	}
 	
 	
 	
-	public void UpdateStore(SstoreDto.update dto, MultipartFile logoimg) {
-		Sstore store = dto.toEntity();
+	public void UpdateStore(SstoreDto.update dto, MultipartFile logoimg, String loginId) {
+		Sstore store = dto.toEntity().addSeller(loginId);
 		MultipartFile storeLogo = logoimg;
 		
 		if(storeLogo != null && storeLogo.isEmpty()==false) {

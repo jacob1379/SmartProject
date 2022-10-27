@@ -30,7 +30,8 @@ public class Sstore {
 	private Integer sStoreStatus;
 	private String sStoreReview;
 	private Integer sCategoryNum;
-	private Integer sLocationCode;	
+	private Integer sLocationCode;
+	private String sSeller;	
 	
 	public void addStoreInfo(String storeLogoName) {
 		this.sStoreLogo = storeLogoName;
@@ -41,5 +42,9 @@ public class Sstore {
 				.sStoreAddress(sStoreAddress).sStoreLogo(sStoreLogo).sMinDeleVery(sMinDeleVery)
 				.sStoreTime(sStoreTime).sStoreIntro(sStoreIntro).sStoreStatus(sStoreStatus)
 				.sStoreReview(sStoreReview).build();
+	}
+	public Sstore addSeller(String loginId) {
+		this.sSeller = loginId;
+		return this;
 	}
 }

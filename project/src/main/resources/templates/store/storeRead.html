@@ -4,6 +4,8 @@
     <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/semantic.css" type="text/css">
     <script src="/script/semantic.js"></script>
     <script src="/script/StoreRead.js"></script>
@@ -11,38 +13,43 @@
 </head>
 <body>
     <div>
-    <header id="header"></header>
+        <header id="header"></header>
         <nav id="nav">
         </nav>
         <aside id="aside">
-            <ul id="asideUl">
+            <ul id="asideUl" class="list-group">
             </ul>
         </aside>
         <section id="section">
         <form id="update_form">
-            <input type="hidden" id="sStoreNum" name="sStoreNum">
-            <label for="sStoreName">가게이름</label>
-            <input id="sStoreName" type="text" name="sStoreName">
-            <br>
-            <img id="showLogo" height="240px">
-            <label for="logoimg">로고 사진</label>
-            <input id="logoimg" type="file" name="logoimg" accept=".jpg,.jpeg,.png,.gif">
-            <br>
-            <label for="sStoreAddress">가게주소</label>
-            <input id="sStoreAddress" type="text" name="sStoreAddress">
-            <br>
-            <label for="sMinDeleVery">최소주문금액</label>
-            <input id="sMinDeleVery" type="text" name="sMinDeleVery"> 원
-            <br>
-            <label for="sStoreTime">영업시간</label>
-            <input type="text" id="sStoreTime" maxlength="4" name="sStoreTime">
-            <br>
-            <label for="sStoreIntro">가게 소개말</label>
-            <input id="sStoreIntro" type="text" name="sStoreIntro">
-            <br>
-            <button id="storeUpdate"  type="button">정보 변경하기</button>
+        <img id="showLogo" height="240px"  class="input-group-text">
+            <input type="hidden" id="sStoreNum">
+            <div class="mb-3">
+                <label for="sStoreName" class="form-label">가게이름</label>
+                <input id="sStoreName" type="text" name="sStoreName" class="form-control" placeholder="상호명을 입력해주세요">
+            </div>
+            <div>
+                <input id="logoimg" type="file" name="logoimg" accept=".jpg,.jpeg,.png,.gif" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="sStoreAddress"  class="form-label">가게주소</label>
+                <input id="sStoreAddress" type="text" name="sStoreAddress"  class="form-control" placeholder="정확한 주소를 입력해주세요">
+            </div>
+            <div class="mb-3">
+            <label for="sMinDeleVery"  class="form-label">최소주문금액</label>
+            <input id="sMinDeleVery" type="text" name="sMinDeleVery"  class="form-control" placeholder="숫자만 입력해주세요 ex) 15000원 경우 15000">
+            </div>
+            <div class="mb-3">
+            <label for="sStoreTime"  class="form-label">영업종료시간</label>
+            <input type="text" id="sStoreTime" maxlength="4" name="sStoreTime"  class="form-control" placeholder="숫자만 입력해주세요 ex) 12시 00분 경우 1200">
+            </div>
+            <div class="mb-3">
+            <label for="sStoreIntro"  class="form-label">가게 소개말</label>
+            <textarea id="sStoreIntro" type="text" name="sStoreIntro" rows="3" class="form-control" placeholder="간단한 가게 소개를 부탁드려요"></textarea>
+            </div>
+            <button id="storeUpdate"  type="button" class="btn btn-outline-success">변경하기</button>
         </form>
-         </section>
+    </section>
     <footer id="footer"></footer>
     </div>
 </body>

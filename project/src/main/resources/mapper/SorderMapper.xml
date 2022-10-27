@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.seller.dao.SorderDao">
+
+
+<select id="orderListRead" resultType="com.example.demo.seller.dto.OrderDto$OrderRead">
+select a_order_num, a_order_status, c_id, a_delevery_address,a_detail_address, s_store_num,a_total_price  from A_ORDER where S_STORE_NUM=#{sStoreNum}
+</select>
+</mapper>

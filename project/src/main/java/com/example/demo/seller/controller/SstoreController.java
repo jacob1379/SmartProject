@@ -4,6 +4,7 @@ package com.example.demo.seller.controller;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -34,13 +35,13 @@ public class SstoreController {
 	@PostMapping(value="/store/new" , produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<RestResponse> write( SstoreDto.write dto, MultipartFile logoimg) {
 		System.out.println(logoimg);
-		Integer store = service.AddStore(dto, logoimg);
+		Integer store = service.AddStore(dto, logoimg, "test1");
 		return ResponseEntity.ok(new RestResponse("OK", store, "/"));
 	}
 	
 	@PutMapping(value="/store/update", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<RestResponse> update (SstoreDto.update dto , MultipartFile logoimg) {
-		service.UpdateStore(dto,logoimg);
+		service.UpdateStore(dto,logoimg, "test1");
 		return ResponseEntity.ok(new RestResponse("OK", "변경이 완료되었습니다.", "/"));
 	}
 	

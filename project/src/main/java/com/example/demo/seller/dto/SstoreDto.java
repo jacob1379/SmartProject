@@ -29,7 +29,7 @@ public class SstoreDto {
 		private Integer sStoreStatus;
 		private String sStoreReview;
 		private Integer sCategoryNum;
-		private Integer sLocationCode;	
+		private Integer sLocationCode;
 	}
 	@Data
 	public static class ForList {
