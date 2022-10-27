@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="semantic.css" type="text/css">
+    <script src="/script/login.js"></script>
+    <script src="semantic.js"></script>
+    <title>Document</title>
+    <style>
+        #title {
+            text-align: center;
+            font-size: 1cm;
+        }
+        .link:hover {
+            color: cyan;
+            transition: 3s;
+        }
+        .btn {
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <div id="title">
+            <h1>배달의 민족 웹사이트</h1>
+        </div>
+    </header>
+    <nav id="nav">
+    </nav>3
+    <aside id="aside">
+        <ul id="asideUl" class="list-group">
+        </ul>
+    </aside>
+    <section id="section">
+        <form action="">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="floatingInput" placeholder="ID">
+                <label for="floatingInput">ID</label>
+              </div>
+              <div class="form-floating">
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                <label for="floatingPassword">Password</label>
+              </div>
+              <button type="button" class="btn btn-outline-success"> 로그인 </button>
+        </form>
+        <div>
+        <a class="link" href="#"> 아이디/비밀번호를 잊어버리셨나요? </a> 
+        <br>
+        <a class="link" href="#"> 처음이신가요 ?</a>
+        </div>
+    </section>
+    
+    <footer id="footer"></footer>
+</body>
+</html>

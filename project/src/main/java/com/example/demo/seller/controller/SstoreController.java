@@ -31,17 +31,20 @@ public class SstoreController {
 	@Autowired
 	private SstoreService service;
 	
+	String prin = "test1";
+	
 	
 	@PostMapping(value="/store/new" , produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<RestResponse> write( SstoreDto.write dto, MultipartFile logoimg) {
+		
 		System.out.println(logoimg);
-		Integer store = service.AddStore(dto, logoimg, "test1");
+		Integer store = service.AddStore(dto, logoimg, prin);
 		return ResponseEntity.ok(new RestResponse("OK", store, "/"));
 	}
 	
 	@PutMapping(value="/store/update", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<RestResponse> update (SstoreDto.update dto , MultipartFile logoimg) {
-		service.UpdateStore(dto,logoimg, "test1");
+		service.UpdateStore(dto,logoimg, prin);
 		return ResponseEntity.ok(new RestResponse("OK", "변경이 완료되었습니다.", "/"));
 	}
 	
