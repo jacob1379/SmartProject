@@ -18,11 +18,11 @@ public class SmenuServiceTest {
 	private SmenuService service;
 	
 	//@Test
-	public void save() {
-		SmenuDto.Write dto = SmenuDto.Write.builder().sMenuName("간장치킨").sMenuInfo("짭짤한 맛").sMenuPrice(18000).build();
-		Smenu sMenu = service.write(dto,1);
-		assertNotNull(sMenu.getSMenuCode());
-	}
+//	public void save() {
+//		SmenuDto.Write dto = SmenuDto.Write.builder().sMenuName("간장치킨").sMenuInfo("짭짤한 맛").sMenuPrice(18000).build();
+//		Smenu sMenu = service.write(dto,1);
+//		assertNotNull(sMenu.getSMenuCode());
+//	}
 	
 //	@Transactional
 //	//@Test

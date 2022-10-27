@@ -7,7 +7,7 @@
 			select nvl(max(S_MENU_CODE),0)+1 from S_Menu
 		</selectKey>
 		insert into S_Menu(S_GROUP_NUM, S_MENU_CODE, S_MENU_NAME, S_MENU_INFO, S_MENU_IMG, S_MENU_PRICE)
-		values(#{sGroupNum}, #{sMenuCode}, #{sMenuName}, #{sMenuImg}, #{sMenuInfo}, #{sMenuPrice})
+		values(#{sGroupNum}, #{sMenuCode}, #{sMenuName}, #{sMenuInfo}, #{sMenuImg}, #{sMenuPrice})
 	</insert>
 	
 	<update id="menuUpdate">
@@ -25,25 +25,20 @@
 		delete from S_MENU where S_MENU_CODE=#{sMenuCode} 
 	</delete>
 	
+	<delete id="menuGroupDelete">
+		delete from S_MENU where S_GROUP_NUM=#{sGroupNum}
+	</delete>
+	
 	<select id="menuListRead" resultType="com.example.demo.seller.dto.SmenuDto$ForList">
-		select S_MENU_NAME, S_MENU_IMG, S_MENU_PRICE from S_MENU where S_GROUP_NUM=#{sGroupNum}
+		select * from S_MENU where S_GROUP_NUM=#{sGroupNum} order by S_MENU_CODE
 	</select>
 	
 	<select id="menulnforRead" resultType="com.example.demo.seller.dto.SmenuDto$Read">
-		select S_MENU_NAME, S_MENU_INFO, S_MENU_IMG, S_MENU_PRICE from S_MENU where S_MENU_CODE=#{sMenuCode} 
+		select * from S_MENU where S_MENU_CODE=#{sMenuCode} 
 	</select>
 	
 	<select id="findById" resultType="String">
-		select * from S_SELLER SS left outer join S_STORE ST 
-		on SS.S_STORE_NUM = ST.S_STORE_NUM LEFT OUTER JOIN S_MENU_GROUP SMG 
-		ON ST.S_STORE_NUM = SMG.S_STORE_NUM LEFT OUTER JOIN S_MENU SM 
-		ON SMG.S_GROUP_NUM = SM.S_GROUP_NUM
-		
-		<trim prefix="where" prefixOverrides="and">
-			<if test="sGroupNum != null"> and smg.s_group_num=#{sGroupNum} </if>
-			<if test="sMenuCode != null"> and sm.s_menu_code=#{sMenuCode} </if>
-			<if test="sStoreNum != null"> and ss.s_store_num=#{sStoreNum} </if>
-		</trim>
-		and rownum &lt; = 1
+		select ss.S_ID from S_SELLER SS left outer join S_STORE ST 
+		on SS.S_STORE_NUM = ST.S_STORE_NUM where ss.S_ID=#{sId} and rownum &lt; = 1
 	</select>
 </mapper>

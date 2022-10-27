@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 import org.springframework.web.multipart.*;
 
+import com.amazonaws.services.s3.*;
+import com.amazonaws.services.s3.model.*;
 import com.example.demo.seller.dao.*;
 import com.example.demo.seller.dto.*;
 import com.example.demo.seller.entity.*;
@@ -17,24 +19,48 @@ public class SmenuService {
 
 	@Autowired
 	private SmenuDao menuDao;
-	@Value("c:/upload/profile")
-	private String profileFolder;
-	@Value("http://localhost:8087/profile/")
-	private String profilePath;
+	
+    @Autowired
+    private AmazonS3Client amazonS3Client;
+	
+	@Value("iciasmartframe2/upload/seller/menuimg")
+	private String S3Bucket;
+	
 	
 	// 메뉴 추가
-	public Smenu write(SmenuDto.Write dto, Integer sGroupNum) {
-		Smenu sMenu = dto.toEntity().addGroupNum(sGroupNum);
-		MultipartFile profile = dto.getSMenuImg();
-		String imgName = System.currentTimeMillis() + "_"+ profile.getOriginalFilename();
+	public void write(SmenuDto.Write dto, String sId) {
+//		System.out.println(dto);
+		Smenu sMenu = dto.toEntity();
 		String profileName = "기본이미지.jpg";
+		MultipartFile profile = dto.getSMenuImg();
+		
+		String id = menuDao.findById(dto.getSGroupNum(), sId).orElseThrow(()-> new SmenuGroupNotFoundException());
+		
+		if(id.equals(sId)==false)
+			throw new JobFailException("추가 권한이 없습니다.");
+		
 		// 프로필 사진이 있으면 저장하고 변경
 		if(profile!=null && profile.isEmpty()==false) {
 			// 폴더명, 파일명으로 빈 파일을 생성한다
-			File file = new File(profileFolder, imgName);
+//			File file = new File(S3Bucket, imgName );
 			try {
-				profileName = imgName;
-				profile.transferTo(file);
+				
+				profileName = System.currentTimeMillis() + "_"+ profile.getOriginalFilename();
+				
+                long size = profile.getSize(); // 파일 크기
+                
+                ObjectMetadata objectMetaData = new ObjectMetadata();
+                objectMetaData.setContentType(profile.getContentType());
+                objectMetaData.setContentLength(size);
+                
+                // S3에 업로드
+                amazonS3Client.putObject(
+                    new PutObjectRequest(S3Bucket, profileName, profile.getInputStream(), objectMetaData)
+                        .withCannedAcl(CannedAccessControlList.PublicRead)
+                );
+                
+                String imagePath = amazonS3Client.getUrl(S3Bucket, profileName).toString();
+                System.out.println(imagePath);
 			} catch (IllegalStateException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -43,39 +69,59 @@ public class SmenuService {
 		}
 		sMenu.addJoinInfo(profileName);
 		menuDao.menuAdd(sMenu);
-		return sMenu;
 	}
 	
 	// 메뉴 변경
-	public Integer update(SmenuDto.Update dto, String sId) {
-		if(menuDao.findById(dto.getSMenuCode(), null, null).get().equals(sId)==true) {
-			MultipartFile profile = dto.getSMenuImg();
-			String imgName = System.currentTimeMillis() + "_"+ profile.getOriginalFilename();
-			// 프로필 사진이 있으면 저장하고 변경
-			if(profile!=null && profile.isEmpty()==false) {
-				// 폴더명, 파일명으로 빈 파일을 생성한다
-				File file = new File(profileFolder, imgName);
-				try {
-					String profileName = imgName;
-					profile.transferTo(file);
-					return menuDao.menuUpdate(Smenu.builder().sMenuName(dto.getSMenuName()).sMenuCode(dto.getSMenuCode()).sMenuInfo(dto.getSMenuInfo()).sMenuImg(profileName).sMenuPrice(dto.getSMenuPrice()).build());
-					//sMenu에 바뀐 이름 추가 메소드를 동작
-				} catch (IllegalStateException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+	public void update(SmenuDto.Update dto, String sId) {
+		Smenu sMenu = dto.toEntity(); 
+		String profileName = "기본이미지.jpg";
+		MultipartFile profile = dto.getSMenuImg();
+		
+		String id = menuDao.findById(dto.getSMenuCode(), sId).orElseThrow(()-> new SmenuGroupNotFoundException());
+		
+		if(id.equals(sId)==false)
+			throw new JobFailException("변경 권한이 없습니다.");
+		
+		// 프로필 사진이 있으면 저장하고 변경
+		if(profile!=null && profile.isEmpty()==false) {
+			// 폴더명, 파일명으로 빈 파일을 생성한다
+//			File file = new File(S3Bucket, imgName );
+			try {
+				
+				profileName = System.currentTimeMillis() + "_"+ profile.getOriginalFilename();
+				
+                long size = profile.getSize(); // 파일 크기
+                
+                ObjectMetadata objectMetaData = new ObjectMetadata();
+                objectMetaData.setContentType(profile.getContentType());
+                objectMetaData.setContentLength(size);
+                
+                // S3에 업로드
+                amazonS3Client.putObject(
+                    new PutObjectRequest(S3Bucket, profileName, profile.getInputStream(), objectMetaData)
+                        .withCannedAcl(CannedAccessControlList.PublicRead)
+                );
+                
+                String imagePath = amazonS3Client.getUrl(S3Bucket, profileName).toString();
+                System.out.println(imagePath);
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-			return menuDao.menuUpdate(Smenu.builder().sMenuName(dto.getSMenuName()).sMenuCode(dto.getSMenuCode()).sMenuInfo(dto.getSMenuInfo()).sMenuPrice(dto.getSMenuPrice()).build());
 		}
-		return 0;
+		sMenu.addJoinInfo(profileName);
+		menuDao.menuUpdate(sMenu);
 	}
 	
 	// 메뉴 삭제
 	public Integer delete(Integer sMenuCode, String sId) {
-		String id = menuDao.findById(sMenuCode, null, null).orElseThrow(()-> new SmenuNotFoundException());
+		
+		String id = menuDao.findById(sMenuCode, sId).orElseThrow(()-> new SmenuNotFoundException());
+		
 		if(id.equals(sId)==false)
 			throw new JobFailException("작업 권한이 없습니다.");
+		
 		return menuDao.menuDelete(sMenuCode);
 		
 	}
@@ -90,3 +136,4 @@ public class SmenuService {
 		return menuDao.menuListRead(sGroupNum);
 	}
 }
+	

@@ -23,8 +23,28 @@
 		delete from S_MENU_GROUP where S_GROUP_NUM=#{sGroupNum}
 	</delete>
 	
-	<select id="menuGroupList" resultType="com.example.demo.seller.dto.SmenuGroupDto$ForList">
-		select * from S_MENU_GROUP where S_STORE_NUM=#{sStoreNum} order by S_GROUP_NUM
+	<resultMap type="com.example.demo.seller.dto.SmenuDto$ForList" id="menulistMap">
+		<result column="S_GROUP_NUM2" property="sGroupNum"/>
+		<result column="S_MENU_CODE" property="sMenuCode"/>
+		<result column="S_MENU_NAME" property="sMenuName"/>
+		<result column="S_MENU_INFO" property="sMenuInfo"/>
+		<result column="S_MENU_IMG" property="sMenuImg"/>
+		<result column="S_MENU_PRICE" property="sMenuPrice"/>
+	</resultMap>
+	
+	<resultMap type="com.example.demo.seller.dto.SmenuGroupDto$ForList" id="listMap">
+		<result column="S_GROUP_NUM" property="sGroupNum"/>
+		<result column="S_GROUP_NAME" property="sGroupName"/>
+		<result column="S_STORE_NUM" property="sStoreNum"/>
+		<collection property="sMenus" resultMap="menulistMap"></collection>
+	</resultMap>
+	
+	<select id="menuGroupList" resultMap="listMap">
+		select
+		smg.S_GROUP_NUM, smg.S_GROUP_NAME, smg.S_STORE_NUM,
+		sm.S_GROUP_NUM as S_GROUP_NUM2, sm.S_MENU_CODE, sm.S_MENU_NAME, sm.S_MENU_INFO, sm.S_MENU_IMG, sm.S_MENU_PRICE
+		from S_MENU_GROUP smg left outer join S_MENU sm on smg.S_GROUP_NUM = sm.S_GROUP_NUM
+		where smg.S_STORE_NUM=#{sStoreNum} order by smg.S_GROUP_NUM,sm.S_MENU_CODE
 	</select>
 	
 </mapper>

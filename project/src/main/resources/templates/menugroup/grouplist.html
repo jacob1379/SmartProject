@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" href="/css/modal.css">
+<script src="/script/grouplist.js"></script>
+<title>Insert title here</title>
+</head>
+<body>
+  <header id="header"> </header>
+	<nav id="nav"></nav>
+	<div id="main">
+		<aside id="aside"></aside>
+		<section id="section">
+			<!-- Modal group opne Button -->
+			<button class="modal_group_in">메뉴 그룹 추가</button>
+			<ul id="menegroup">
+			</ul>
+		</section>
+	</div>
+	<footer id="footer">
+	</footer>
+
+
+
+
+	<!-- Group Modal New -->
+	<div class="modal_group">
+		<div class="modal_group_content">
+			<form id="write_group_form">
+				<input type="hidden" name="sStoreNum" id="sStoreNum"> 
+				<input type="hidden"id="sId">
+				<input type="text" id="sGroupName" placeholder="그룹명은 필수입력입니다.">
+			</form>
+			<button id="write_group" type="button">메뉴그룹 추가</button>
+			<button class="modal_group_Out">취소</button>
+		</div>
+	</div>
+	
+	<!-- Group Modal Update -->
+	<div class="modal_group_update">
+		<div class="modal_group_update_content">
+			<form id="write_group_update_form">
+				<input type="hidden" id="sGroupNumUpdate"> 
+				<input type="hidden" name="sId" id="sIdUpdate" value="test1">
+				<span id="modalGroupName"></span>
+				<br>
+				<input type="text" id="sGroupNameUpdate" placeholder="변경할 그룹명을 입력하시오">
+			</form>
+			<button id="write_group_update" type="button">메뉴그룹 추가</button>
+			<button class="modal_group_update_Out">취소</button>
+		</div>
+	</div>
+	
+
+	<!-- Menu Modal New -->
+	<div class="modal_menu">
+		<div class="modal_menu_content">
+			<form id="write_menu_form">
+				<input type="hidden" name="sGroupNum" id="sGroupNum"> 
+				<img id="profileImg_new" style="width: 250px; height: 150px;"> 
+				<input type="file" name="sMenuImg" id="sMenuImg" accept=".jpg,.jpeg,.png,.gif">
+				<input type="text" name="sMenuName" id="sMenuName" placeholder="메뉴명은 필수입력입니다."> 
+				<br>
+				<input type="text" name="sMenuInfo" id="sMenuInfo" placeholder="메뉴 설명을 입력하시오.">
+				<br> 
+				<input type="text" name="sMenuPrice" id="sMenuPrice" placeholder="가격은 필수입력입니다.">
+			</form>
+			<button id="write_menu" type="button">메뉴 추가</button>
+			<button class="modal_menu_Out">취소</button>
+		</div>
+	</div>
+	
+	<!-- Menu Modal Update -->
+	<div class="modal_menu_update">
+		<div class="modal_menu_update_content">
+			<form id="write_menu_update_form">
+				<input type="hidden" name="sMenuCode" id="sMenuCodeUpdate">
+				<img id="profileImg_update" style="width: 250px; height: 150px;">
+				<input type="file" name="sMenuImg" id="sMenuImgUpdate" accept=".jpg,.jpeg,.png,.gif">
+				<br>
+				<span id="modalname"></span>
+				<br>
+				<input type="text" name="sMenuName" id="sMenuNameUpdate" placeholder="변경할 메뉴명을 입력하시오.">
+				<br>
+				<span id="modalinfo">메뉴 설명 : </span>
+				<br>
+				<input type="text" name="sMenuInfo" id="sMenuInfoUpdate" placeholder="변경할 메뉴명 설명을 입력하시오.">
+				<br> 
+				<span id="modalprice"></span>
+				<br>
+				<input type="text" name="sMenuPrice" id="sMenuPriceUpdate" placeholder="변경할 가격을 입력하시오.">
+			</form>
+			<button id="write_menu_update" type="button">메뉴 추가</button>
+			<button class="modal_menu_update_Out">취소</button>
+		</div>
+	</div>
+</body>
+</html>

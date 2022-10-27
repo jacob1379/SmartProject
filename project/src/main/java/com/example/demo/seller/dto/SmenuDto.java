@@ -33,15 +33,17 @@ public class SmenuDto {
 	@Data
 	@Builder
 	public static class Write {
+		private Integer sGroupNum;
 		@NotEmpty(message = "메뉴명은 필수입력입니다")
 		private String sMenuName;
 		private String sMenuInfo;
 		@NotNull(message = "메뉴 가격은 필수입력입니다")
 		private Integer sMenuPrice;
+		
 		private MultipartFile sMenuImg;
 		
 		public Smenu toEntity() {
-			return Smenu.builder().sMenuName(sMenuName).sMenuInfo(sMenuInfo).sMenuPrice(sMenuPrice).build();
+			return Smenu.builder().sGroupNum(sGroupNum).sMenuName(sMenuName).sMenuInfo(sMenuInfo).sMenuPrice(sMenuPrice).build();
 		}
 	}
 	

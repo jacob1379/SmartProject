@@ -19,6 +19,9 @@ public interface SmenuDao {
 	// 상품 삭제
 	public Integer menuDelete(Integer sMenuCode);
 	
+	// 그룹으로 삭제
+	public Integer menuGroupDelete(Integer sGroupNum);
+	
 	// 상품리스트 출력
 	public List<SmenuDto.ForList> menuListRead(Integer sGroupNum);
 	
@@ -26,5 +29,5 @@ public interface SmenuDao {
 	public Optional<SmenuDto.Read> menulnforRead(Integer sMenuCode);
 	
 	// 상품 삭제, 변경 전에 판매회원아이디 확인
-	public Optional<String> findById(Integer sMenuCode, Integer sGroupNum, Integer sStoreNum);
+	public Optional<String> findById(Integer sStoreNum, String sId);
 }

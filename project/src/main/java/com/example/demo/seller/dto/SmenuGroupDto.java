@@ -16,6 +16,8 @@ public class SmenuGroupDto {
 		private Integer sGroupNum;
 		private String sGroupName;
 		private Integer sStoreNum;
+		
+		private List<SmenuDto.ForList> sMenus;
 	}
 	
 	@Data
@@ -32,22 +34,31 @@ public class SmenuGroupDto {
 	public static class Write {
 		@NotEmpty(message = "메뉴그룹명은 필수입력입니다.")
 		private String sGroupName;
-		private Integer sGroupNum;
+		private Integer sStoreNum;
 
 		public SmenuGroup toEntity() {
-			return SmenuGroup.builder().sGroupName(sGroupName).sGroupNum(sGroupNum).build();
+			return SmenuGroup.builder().sGroupName(sGroupName).sStoreNum(sStoreNum).build();
 		}
 	}
 	
 	@Data
 	@Builder
 	public static class Update {
-		@NotNull
+
 		private Integer sGroupNum;
 		private String sGroupName;
 		
 		public SmenuGroup toEntity() {
 			return SmenuGroup.builder().sGroupNum(sGroupNum).sGroupName(sGroupName).build();
+		}
+	}
+	
+	@Data
+	public static class Delete {
+		private Integer sGroupNum;
+		
+		public SmenuGroup toEntity() {
+			return SmenuGroup.builder().sGroupNum(sGroupNum).build();
 		}
 	}
 }

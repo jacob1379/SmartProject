@@ -20,37 +20,47 @@ public class SmenuGroupService {
 	private SmenuDao menuDao;
 	
 	// 그룹 메뉴 쓰기 (메뉴그룹명은 필수입력)
-	public SmenuGroup write(SmenuGroupDto.Write dto, Integer sStoreNum, String sId) {
+	public SmenuGroup write(SmenuGroupDto.Write dto, String sId) {
 		
-		String id = menuDao.findById(null, null, sStoreNum).orElseThrow(()-> new SmenuGroupNotFoundException());
+		String id = menuDao.findById(dto.getSStoreNum(), sId).orElseThrow(()-> new SmenuGroupNotFoundException());
 		
 		if(id.equals(sId)==false)
 			throw new JobFailException("추가 권한이 없습니다.");
 		
-		SmenuGroup sMenuGroup = dto.toEntity().addStoreNum(sStoreNum);
+		SmenuGroup sMenuGroup = dto.toEntity();
 		groupDao.menuGroupAdd(sMenuGroup);
 		return sMenuGroup;
 	}
 	
 	// 그룹 메뉴 변경
 	public Integer update(SmenuGroupDto.Update dto, String sId) {
-		String id = menuDao.findById(null, dto.getSGroupNum(), null).orElseThrow(()-> new SmenuGroupNotFoundException());
+		
+		String id = menuDao.findById(dto.getSGroupNum(), sId).orElseThrow(()-> new SmenuGroupNotFoundException());
+		System.out.println(id);
 		if(id.equals(sId)==false)
 			throw new JobFailException("변경 권한이 없습니다.");
+		
 		return groupDao.menuGroupUpdate(dto.toEntity());
 	}
 	
 	// 그룹 메뉴 삭제
 	public Integer delete(Integer sGroupNum, String sId) {
-		String id = menuDao.findById(null, sGroupNum, null).orElseThrow(()-> new SmenuGroupNotFoundException());
+		
+		String id = menuDao.findById(sGroupNum, sId).orElseThrow(()-> new SmenuGroupNotFoundException());
+		
 		if(id.equals(sId)==false)
 			throw new JobFailException("삭제 권한이 없습니다.");
+		
 		return groupDao.menuGroupDelete(sGroupNum);
 	}
 	
+	public Integer groupnumdelete(Integer sGroupNum) {
+		return menuDao.menuGroupDelete(sGroupNum);
+	}
+	
 	// 메뉴 그룹 리스트 출력
-	public List<ForList> list(Integer sStorNum) {
-		return groupDao.menuGroupList(sStorNum);
+	public List<ForList> list(Integer sStoreNum) {
+		return groupDao.menuGroupList(sStoreNum);
 	}
 	
 	//map (키 : 값) 매칭
