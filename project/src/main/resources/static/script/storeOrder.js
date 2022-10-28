@@ -1,5 +1,5 @@
 const sno = location.search.substr(11);
-
+console.log("================")
 async function getResult () {
     const order =  await $.ajax ( {
         url : "/store/order",
