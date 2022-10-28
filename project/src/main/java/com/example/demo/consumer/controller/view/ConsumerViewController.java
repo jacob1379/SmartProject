@@ -42,7 +42,7 @@ public class ConsumerViewController {
 		
 	}
 	
-	@GetMapping("/main/login")
+	@GetMapping("/consumer/login")
 	public void login() {
 		
 	}

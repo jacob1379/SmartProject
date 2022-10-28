@@ -20,7 +20,7 @@ import com.example.demo.security.ConsumerLoginSuccessHandler;
 
 @EnableWebSecurity
 public class SecurityConfig {
-	// 관리자는 /adim/**으로 접근한다
+	// 관리자
 	@Order(1)
 	@Configuration
 	public static class AdminSecurityConfing extends WebSecurityConfigurerAdapter {
@@ -50,8 +50,8 @@ public class SecurityConfig {
 	@Configuration //설정파일 or Bean을 등록하기 위한 어노테이션
 	@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 	// MethodSecurity용 설정이 따로 필요한데 이때 사용, 속성값들의 기본은 false
-	// prePostEnabled : @PreAuthorize, @PostAuthorize(특정 메소드 호출 전,후 권한을 확인) 어노테이션을 사용하여 인가 처리를 하고 싶을 때 사용하는 옵션
-	// securedEnabled : @Secured(특정 메소드 호출 전 권한을 확인, 스프링에서 지원) 어노테이션을 사용하여 인가 처리를 하고 싶을 때 사용하는 옵션
+	// prePostEnabled : @PreAuthorize, @PostAuthorize(특정 메소드 호출 전,후 권한을 확인) 로그인 여부로 메소드에 접근할 수 있는지를 설정
+	// securedEnabled : @Secured(특정 메소드 호출 전 권한을 확인, 스프링에서 지원) 권한으로 메소드에 접근할 수 있는지를 설정
 	// jsr250Enabled : @RoleAllowed(특정 메소드 호출 전 권한을 확인, 자바에서 지원) 어노테이션을 사용하여 인가 처리를 하고 싶을 때 사용하는 옵션
 	public class ConsumerSecurityConfig extends WebSecurityConfigurerAdapter{
 		// WebSecurityConfigurerAdapter 이용 불가
