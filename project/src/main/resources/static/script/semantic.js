@@ -7,6 +7,7 @@ function asidePrint () {
     lists.forEach((a)=>{
         const $li = $("<li>").appendTo("#asideUl");
         $(`<button type='button' class="btn btn-outline-secondary">`).click(()=>{
+			
             location.href = a.link;
         }).text(a.result).appendTo($li);
     })
