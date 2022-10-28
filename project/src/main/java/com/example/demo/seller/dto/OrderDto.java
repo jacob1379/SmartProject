@@ -25,4 +25,11 @@ public class OrderDto {
 		private Integer aTotalPrice;
 		
 	}
+	
+	@Data
+	@Builder
+	public static class statusUpdate {
+		private Integer aOrderNum;
+		private OrderStatus aOrderStatus;
+	}
 }

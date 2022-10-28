@@ -8,8 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import com.example.demo.seller.dto.RestResponse;
+import com.example.demo.seller.entity.Sorder;
 import com.example.demo.seller.dto.OrderDto.OrderRead;
 import com.example.demo.seller.service.SorderService;
 
@@ -25,4 +27,11 @@ public class SorderController {
 		List<OrderRead> order =  service.orderRead(sStoreNum);
 		return ResponseEntity.ok(new RestResponse("OK", order, "/"));
 	}
+	
+	@PutMapping(value ="/store/order" , produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<RestResponse> statusUpdate(Sorder order) {
+		service.statusUpdate(order);
+		return ResponseEntity.ok(new RestResponse("OK","변경 완료","/"));
+	}
+	
 }

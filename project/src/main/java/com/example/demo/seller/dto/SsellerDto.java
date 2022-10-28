@@ -71,7 +71,7 @@ public class SsellerDto {
 		private String sEmail;
 		private LocalDate sJoinday;
 		private Long days;
-		
+		private Integer sStoreNum;
 		private sLevel slevel;
 	}
 	

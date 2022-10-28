@@ -19,4 +19,9 @@ public class SorderService {
 	System.out.println(dao.orderListRead(sStoreNum));
 		return dao.orderListRead(sStoreNum);
 	}
+	
+	public void statusUpdate(Sorder order) {
+		 dao.statusUpdate(order);
+		
+	}
 }

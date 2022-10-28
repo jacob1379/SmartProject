@@ -11,44 +11,91 @@ async function getResult () {
 }
 
 function printresult (order) {
-
+	console.log(order);
     order.forEach((a,b) => {
-		console.log(a)
+		if(a.aorderStatus === "접수대기") {
             const $tr = $(`<tr id="tr${b}">`).appendTo("#tbody");
     $("<th>").text(a.aorderNum).appendTo($tr);
     $("<td>").text(a.adeleveryAddress + a.adetailAddress).appendTo($tr);
     $("<td>").text(a.atotalPrice + "원").appendTo($tr);
     $("<td>").text(a.cid).appendTo($tr);
     $(`<button class="btn btn-outline-warning" id="orderbtn${b}">`).text("주문 접수").appendTo("<td id='btnTable'>").appendTo($tr);
+    }
+    
+    	if(a.aorderStatus === "접수완료") {
+            const $tr = $(`<tr id="tr${b}">`).appendTo("#tbody");
+    $("<th>").text(a.aorderNum).appendTo($tr);
+    $("<td>").text(a.adeleveryAddress + a.adetailAddress).appendTo($tr);
+    $("<td>").text(a.atotalPrice + "원").appendTo($tr);
+    $("<td>").text(a.cid).appendTo($tr);
+    $(`<button class="btn btn-outline-success" id="orderbtn${b}">`).text("배달 시작").appendTo("<td id='btnTable'>").appendTo($tr);
+    }
+    
+    	if(a.aorderStatus === "배달중") {
+            const $tr = $(`<tr id="tr${b}">`).appendTo("#tbody");
+    $("<th>").text(a.aorderNum).appendTo($tr);
+    $("<td>").text(a.adeleveryAddress + a.adetailAddress).appendTo($tr);
+    $("<td>").text(a.atotalPrice + "원").appendTo($tr);
+    $("<td>").text(a.cid).appendTo($tr);
+    $(`<button class="btn btn-outline-danger" id="orderbtn${b}">`).text("배달 완료").appendTo("<td id='btnTable'>").appendTo($tr);
+    }
+    
     });
-
-}
-async function orderAgree (idnum) {
-     $(`#orderbtn${idnum}`).attr('class','btn btn-outline-success').text("배달 완료");
+	}
+async function orderAgree (idnum, orderNum) {
+     $(`#orderbtn${idnum}`).attr('class','btn btn-outline-success').text("배달 시작");
      await $.ajax({
-		 url : "/"
+		 url : "/store/order",
+		 method : "put",
+		 data : {
+			 aOrderNum :   orderNum,
+			aOrderStatus : "접수완료"
+		 }
 	 })
 }
-function orderFinish (idnum) {
-	$(`#orderbtn${idnum}`).text("");
-	$(`<i class="fa-sharp fa-solid fa-check"></i>`).appendTo(`#orderbtn${idnum}`);
-	$(`#orderbtn${idnum}`).attr('class','btn btn-outline-danger');
+
+async function orderDelevery (idnum, orderNum) {
+	$(`#orderbtn${idnum}`).attr('class','btn btn-outline-danger').text("배달 완료");
+	await $.ajax({
+		 url : "/store/order",
+		 method : "put",
+		 data : {
+			 aOrderNum :   orderNum,
+			aOrderStatus : "배달중"
+		 }
+	 })
 	
 }
 
+async function orderFinish (idnum, orderNum) {
+	
+			$(`#tr${idnum}`).remove();
+			await $.ajax({
+		 url : "/store/order",
+		 method : "put",
+		 data : {
+			 aOrderNum :   orderNum,
+			aOrderStatus : "배달완료"
+		 }
+	 })
+}
 
 $(document).ready(async ()=>{
-   const order =  await getResult();
-    printresult(order);
-    $('.btn').click((i)=>{
+   const order =  await getResult();	
+     printresult(order);
+    $('.btn').click(async function (i){
+		const btn = $(this);
+		const tr = btn.parent();
+		const td = tr.children();
+		const orderNum = td.eq(0).text();
 	  const id = i.currentTarget.id
 	  const idnum = id.substr(8);
 	  if($(`#${id}`).hasClass("btn-outline-warning") === true) {
-		orderAgree(idnum);
+			await orderAgree(idnum, orderNum);
 		} else if ($(`#${id}`).hasClass("btn-outline-success") === true) {
-			orderFinish(idnum);
+			await orderDelevery(idnum, orderNum);
 		} else if ($(`#${id}`).hasClass("btn-outline-danger") === true) {
-			$(`#tr${idnum}`).remove();
+			await orderFinish(idnum, orderNum);
 		}
   })
     

@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.demo.seller.dto.RestResponse;
 import com.example.demo.seller.dto.SstoreDto;
 import com.example.demo.seller.dto.SstoreDto.Read;
+import com.example.demo.seller.service.SsellerService;
 import com.example.demo.seller.service.SstoreService;
 
 @Validated
@@ -30,6 +31,8 @@ public class SstoreController {
 
 	@Autowired
 	private SstoreService service;
+	@Autowired
+	private SsellerService selser;
 	
 	String prin = "test1";
 	
@@ -55,8 +58,9 @@ public class SstoreController {
 	}
 	
 	@GetMapping(value="/store" , produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<RestResponse> read(Integer sStoreNum) {
-	 Read store = service.ReadStore(sStoreNum);
+	public ResponseEntity<RestResponse> read(String prin) {
+		Integer sStoreNum = selser.read(prin).getSStoreNum();
+		Read store = service.ReadStore(sStoreNum);
 		return ResponseEntity.ok(new RestResponse("OK", store, null));
 	}
 	

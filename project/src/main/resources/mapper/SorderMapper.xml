@@ -4,6 +4,14 @@
 
 
 <select id="orderListRead" resultType="com.example.demo.seller.dto.OrderDto$OrderRead">
-select a_order_num, a_order_status, c_id, a_delevery_address,a_detail_address, s_store_num,a_total_price  from A_ORDER where S_STORE_NUM=#{sStoreNum}
+select a_order_num, a_order_status, c_id, a_delevery_address,a_detail_address, s_store_num,a_total_price  from A_ORDER where S_STORE_NUM=#{sStoreNum} order by A_ORDER_NUM
 </select>
+
+<update id="statusUpdate">
+update A_ORDER
+	<trim prefix="set" suffixOverrides=",">
+	   	<if test="aOrderStatus != null">A_ORDER_STATUS=#{aOrderStatus},</if>
+	</trim>
+	where A_ORDER_NUM = #{aOrderNum}
+</update>
 </mapper>

@@ -20,5 +20,11 @@ public class SViewController {
 	public void storeOrder() {
 		
 	}
+	
+	@GetMapping("/store/login")
+	public void storeLogin() {
+		
+	}
+
 
 }
